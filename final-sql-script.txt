@@ -1,0 +1,23 @@
+CREATE DATABASE IF NOT EXISTS `curriculumprojectdb` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `curriculumprojectdb`;
+
+CREATE TABLE `curriculumprojectdb`.`users` ( `id` INT NOT NULL AUTO_INCREMENT , `name` VARCHAR(256) NOT NULL , `email` VARCHAR(256) NOT NULL , `password` VARCHAR(256) NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB; 
+ALTER TABLE `users` ADD `role` VARCHAR(20) NOT NULL AFTER `password`; 
+
+CREATE TABLE `curriculumprojectdb`.`admins` ( `id` INT NOT NULL , `name` VARCHAR(256) NOT NULL ) ENGINE = InnoDB; 
+
+ALTER TABLE `admins` ADD CONSTRAINT `FK_admin_users` FOREIGN KEY (`id`) REFERENCES `users`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+CREATE TABLE `curriculumprojectdb`.`curriculums` ( `id` INT NOT NULL , `oks` VARCHAR(20) NULL , `specialty` VARCHAR(50) NOT NULL , `academicYear` VARCHAR(20) NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB; 
+
+CREATE TABLE `curriculumprojectdb`.`disciplines` ( `id` INT NOT NULL , `disciplineNameBg` VARCHAR(100) NOT NULL , `disciplineNameEng` VARCHAR(100) DEFAULT NULL , `category` VARCHAR(50) NOT NULL ,`professor` VARCHAR(100) NOT NULL , `semester` VARCHAR(50) NOT NULL , `elective` VARCHAR(50) DEFAULT NULL , `credits` INT UNSIGNED NOT NULL , `annotation` TEXT NOT NULL , `prerequisites` TEXT NULL DEFAULT NULL , `expectations` TEXT NULL DEFAULT NULL , `content` INT DEFAULT NULL , `synopsis` TEXT DEFAULT NULL , `bibliography` TEXT DEFAULT NULL , `administrative_info` TEXT DEFAULT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB; 
+
+CREATE TABLE `curriculumprojectdb`.`curriculum_disciplines` ( `curriculumId` INT NOT NULL , `disciplineId` INT NOT NULL ) ENGINE = InnoDB; 
+
+ALTER TABLE `curriculums` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT; 
+
+ALTER TABLE `disciplines` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT; 
+
+ALTER TABLE `curriculum_disciplines` ADD CONSTRAINT `FK_curriculum_manytomany` FOREIGN KEY (`curriculumId`) REFERENCES `curriculums`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT; 
+
+ALTER TABLE `curriculum_disciplines` ADD CONSTRAINT `FK_disciplines_manytomany` FOREIGN KEY (`disciplineId`) REFERENCES `disciplines`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;

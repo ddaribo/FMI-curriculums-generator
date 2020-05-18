@@ -60,7 +60,12 @@
 
     // Execute the prepared statement
     public function execute(){
-      return $this->stmt->execute();
+      try{
+        return $this->stmt->execute();
+      } catch(PDOException $e){
+        $this->error = $e->getMessage();
+        echo $this->error;
+      }
     }
 
     // Get result set as array of objects
@@ -79,4 +84,8 @@
     public function rowCount(){
       return $this->stmt->rowCount();
     }
+    public function getLastInsertedId(){
+      return $this->connection->lastInsertId();
+    }
+  
   }
