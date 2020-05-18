@@ -21,3 +21,5 @@ ALTER TABLE `disciplines` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `curriculum_disciplines` ADD CONSTRAINT `FK_curriculum_manytomany` FOREIGN KEY (`curriculumId`) REFERENCES `curriculums`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT; 
 
 ALTER TABLE `curriculum_disciplines` ADD CONSTRAINT `FK_disciplines_manytomany` FOREIGN KEY (`disciplineId`) REFERENCES `disciplines`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE `curriculumprojectdb`.`curriculums` DROP INDEX `specialty`, ADD UNIQUE `specialty` (`specialty`, `academicYear`, `oks`) USING BTREE; 

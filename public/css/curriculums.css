@@ -1,0 +1,10 @@
+.curriculumList{
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+}
+
+.curriculumRow{
+    display: flex;
+    flex-direction: row;
+}

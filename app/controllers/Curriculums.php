@@ -8,13 +8,25 @@
 
         
         public function index(){
-            $disciplines = $this->curriculumModel->getCurriculums();
+            $curriculums = $this->curriculumModel->getCurriculums();
 
             $data = [
                 'curriculums' => $curriculums
             ];
 
             $this->view('curriculums/index', $data);
+        }
+
+        public function details($id){
+            $disciplines = $this->curriculumModel->getDisciplinesForCurriculum($id);
+            $curriculum = $this->curriculumModel->getCurriculumById($id);
+
+            $data = [
+                'curriculum' => $curriculum,
+                'disciplines' => $disciplines
+            ];
+
+            $this->view('curriculums/details', $data);
         }
 
     }

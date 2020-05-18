@@ -64,19 +64,26 @@
                   $specialties[] = $specialty;
                 }
                 //add oks
+                $oksArr = [];
+                foreach($json['ОКС'] as $oks){
+                  $oksArr[] = $oks;
+                }
                 $years = [];
                 foreach($json['Академични години'] as $year){
                   $years[] = $year;
                 }
                 foreach($specialties as $specialty){
                   foreach($years as $year){
-
-                    $curriculumdata = [
-                      'specialty' => $specialty,
-                      'academicYear' => $year,
-                  ];
-                  $this->curriculumModel->addCurriculum($curriculumdata);
-                  $returnedCurriculumIdsObjects[] =  $this->curriculumModel->getCurriculumByNameAndYear($curriculumdata);
+                    foreach($oksArr as $oks){
+                      $curriculumdata = [
+                        'oks' => $oks,
+                        'specialty' => $specialty,
+                        'academicYear' => $year,
+                      
+                    ];
+                      $this->curriculumModel->addCurriculum($curriculumdata);
+                      $returnedCurriculumIdsObjects[] =  $this->curriculumModel->getCurriculumByNameAndYearAndOKS($curriculumdata);
+                    }
                   }
                 }
                 $storedCurriculumIds = [];

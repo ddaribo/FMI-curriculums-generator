@@ -1,29 +1,51 @@
-<?php require APPROOT . '/views/inc/header.php'; ?>
 
+        <div class="importPageContainer">
 
-<div class="jumbotron">
-    <div class="container">
-        <h1>Добави дисциплина</h1>
+            <div class="info">
+                <h1>Добави дисциплина</h1>
+                <p>
+                    Дисциплината се добавя като JSON текст във формата, който е показан в текстовото поле. </br>
+                    Можете да валидирате JSON текста си в  <a href="https://jsonlint.com/">JSONLint</a> , преди да го качите.
+                </p>
+            </div>
+            <div class="importContainer">
+    
+            <form id="importJson" method="POST" action="<?php echo URLROOT; ?>/disciplines/import">
+                <div id="formBody">
+    
+                    <label for="mainInfo"> JSON файл: </label> 
+                    <textarea name="mainInfo" class="<?php echo (!empty($data['mainInfo_err'])) ? 'is_invalid' : '';?>" value="<?php echo $data['mainInfo'];?>">
+                    {
+                "Дисциплина": "Име на дисциплна",
+                "Discipline": "Име на дисциплна на английски - незадължително",
+                "ОКС": ["Бакалавър", "Магистър"],
+                "Специалности": ["Специалност1", "Специалност 2", "..."],
+                "Академични години": ["2018\/2019", "2020\/2021", "..."],
+                "Преподавател": "Име",
+                "Статут": "задължителна/избираема",
+                "Категория": "ОКН",
+                "Семестър": "Летен",
+                "Кредити": "5",
+                "Анотация": "Анотация",
+                "Предварителни изисквания": "Текст.",
+                "Очаквани резултати": "Текст.",
+                "Съдържание": ["Тема1", "Тема2", "..."],
+                "Конспект": ["Тема1", "Тема2", "..."],
+                "Библиография": ["Източник 1", "Източник 2", "..."],
+                "Административна информация": {
+                    "Утвърдена с решение на ФС с протокол": "№",
+                    "Код": "Код",
+                    "Утвърдил": "Декан на ФМИ"
+                    "Произволно поле":"Стойност"
+                }
+             }
+                    </textarea>
+                    <span class="invalid-feedback"><?php echo $data['mainInfo_err'];?></span>
+                    <input type="submit" value="Импорт">
+                </div>
+            </form>
+        </div>
     </div>
 
-     <form method="POST" action="<?php echo URLROOT; ?>/disciplines/import">
 
-        <label for="mainInfo">Обща информация за дисциплина: </label> 
-        <textarea name="mainInfo" class="<?php echo (!empty($data['mainInfo_err'])) ? 'is_invalid' : '';?>" value="<?php echo $data['mainInfo'];?>"></textarea>
-        <span class="invalid-feedback"><?php echo $data['mainInfo_err'];?></span>
-        <label for="content">Съдържание на дисциплината: </label> 
-        <textarea name="content"></textarea>
 
-        <label for="synopsis">Конспект: </label> 
-        <textarea name="synopsis"></textarea>
-
-        <label for="bibliography">Библиография: </label>
-        <textarea name="bibliography"></textarea>
-
-        <label for="administrativeInfo">Административна информация: </label>
-        <textarea name="administrativeInfo"></textarea>
-
-        <input type="submit" value="Submit">
-     </form>
-
-</div>

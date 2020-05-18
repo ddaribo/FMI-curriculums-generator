@@ -4,6 +4,5 @@
     <?php else : ?>
         <a class="nav-link" href="<?php echo URLROOT; ?>/users/register">Register</a>
         <a class="nav-link" href="<?php echo URLROOT; ?>/users/login">Log in</a>
-    <?php endif; ?>   
-
+    <?php endif; ?>  
 </div>
