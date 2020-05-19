@@ -8,18 +8,14 @@
             <h3>Бакалавърски програми</h3>
             <?php foreach($data['curriculums'] as $curriculum) : ?>
                 <?php if ($curriculum->oks == "Бакалавър") {?>
-                    <div class="curriculumRow" id="bachelor">
-                        <a href="<?php echo URLROOT . "/curriculums/details/" . $curriculum->id;?>"><?php echo $curriculum->specialty ."&emsp;&emsp;&emsp;" . $curriculum->academicYear; ?></a>
-                    </div>
+                        <a class="commonLink" href="<?php echo URLROOT . "/curriculums/details/" . $curriculum->id;?>"> <div class="curriculumRow" id="bachelor"><?php echo $curriculum->specialty ;?><label> <?php echo $curriculum->academicYear; ?></label></div></a>
                 <?php } ?>
             <?php endforeach; ?>
             
             <h3>Магистърски програми</h3>
             <?php foreach($data['curriculums'] as $curriculum) : ?>
                 <?php if ($curriculum->oks == "Магистър") {?>
-                    <div class="curriculumRow" id="master">
-                    <a href="<?php echo URLROOT . "/curriculums/details/" . $curriculum->id;?>"><?php echo $curriculum->specialty ."&emsp;&emsp;&emsp;" . $curriculum->academicYear; ?></a>
-                    </div>
+                    <a class="commonLink" href="<?php echo URLROOT . "/curriculums/details/" . $curriculum->id;?>"> <div class="curriculumRow" id="bachelor"><?php echo $curriculum->specialty ;?><label> <?php echo $curriculum->academicYear; ?></label></div></a>
                 <?php } ?>
             <?php endforeach; ?>
         </div>

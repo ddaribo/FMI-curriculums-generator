@@ -7,7 +7,7 @@
         }
 
         public function getCurriculums(){
-            $this->db->query("SELECT * FROM curriculums");
+            $this->db->query("SELECT * FROM curriculums ORDER BY specialty ASC, academicYear DESC");
 
             $results = $this->db->resultSet();
 

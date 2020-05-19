@@ -25,7 +25,7 @@ html, body {
     flex-direction: row;
     margin: 0;
     color: white;
-    font-size: 2em;
+    font-size: 1.5em;
     z-index: 2;
     position: fixed;
 }
@@ -35,7 +35,7 @@ html, body {
     padding: 14px 25px;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
+    /*display: inline-block;*/
       
 }
 .nav a:hover, .nav a:active {

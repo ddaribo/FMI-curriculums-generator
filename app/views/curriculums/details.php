@@ -1,19 +1,15 @@
+<?php require APPROOT . '/views/inc/header.php'; ?>
+    <div class="title">
+        <h2>Дисциплини, изучавани от специалност <?php echo $data['curriculum']->specialty;?></h2>
+        <h2>Випуск, приет през академичната <?php echo $data['curriculum']->academicYear;?></h2>
+    </div>
 
-<div class="jumbotron">
-    <div class="container">
-        <h1>Disciplines</h1>
-        <a href="<?php echo URLROOT; ?>/disciplines/import" class="btn">Добави дисциплина</a>
+
+<div class="curriculumsPageContainer">
+
+    <div class="curriculumList">
+        <?php foreach($data['disciplines'] as $discipline) : ?>
+                <a href="<?php echo URLROOT . "/disciplines/visualise/" . $discipline->id;?>"> <div class="curriculumRow"><?php echo $discipline->disciplineNameBg;?></div></a>
+        <?php endforeach; ?>
     </div>
 </div>
-
-<p class="shortDescription" id="<?php echo $data['curriculum']->id;?>"><?php echo $data['curriculum']->specialty;?></p>
-        <p><?php echo $data['curriculum']->academicYear;?></p>
-
-<?php foreach($data['disciplines'] as $discipline) : ?>
-        <p class="shortDescription" id="<?php echo $discipline->id;?>"><?php echo $discipline->disciplineNameBg;?></p>
-        <a href="<?php echo URLROOT . "/disciplines/visualise/" . $discipline->id;?>">View</a>
-
-<?php endforeach; ?>
-
-    <div id="showData">
-    </div>
