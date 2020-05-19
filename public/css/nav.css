@@ -30,13 +30,16 @@ html, body {
     position: fixed;
 }
 
+.nav p{
+    margin-left: 2em;
+}
+
 .nav a:link, .nav a:visited{
     color: white;
     padding: 14px 25px;
     text-align: center;
     text-decoration: none;
-    /*display: inline-block;*/
-      
+    line-height: 2.3;
 }
 .nav a:hover, .nav a:active {
     color: #1C1E27;

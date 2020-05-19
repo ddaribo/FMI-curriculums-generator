@@ -10,14 +10,16 @@ $path = URLROOT . "/public/JSONS/file" . $data['discipline']->id . ".json";
 <!-- </form> -->
 
 
-
 <div id="reviewNav">
-    <a class="adminLink" disabled href="#"?>Преглед:</a>
-    <a class="adminLink" active href="<?php echo URLROOT . "/disciplines/visualise/" . $data['discipline']->id ."/#short"?>">Кратък</a>
-    <a class="adminLink" href="<?php echo URLROOT . "/disciplines/visualise/" . $data['discipline']->id ."/#detailed"?>">Подробен</a>
-    <a class="adminLink" href="<?php echo URLROOT . "/disciplines/visualise/" . $data['discipline']->id ."/#admin"?>">Служебен</a>
+    <p class="adminLink" disabled href="#"?>Преглед:</p>
+    <a class="adminLink" id="short" active href="">Кратък</a>
+    <a class="adminLink" id="detailed" href="">Подробен</a>
+    <a class="adminLink" id="admin" href="">Служебен</a>
     <a class="adminLink" href="<?php echo URLROOT . "/disciplines/download/" . $data['discipline']->id ?>">Експорт на JSON файл за тази дисциплина</a>
+    <a class="adminLink" href="<?php echo URLROOT . "/disciplines/visualise/" . $data['discipline']->id ."/#admin"?>">Изтриване</a>
 </div>
+
+<div id="content"></div>
 
 <div class="mainContainer">
 
@@ -131,3 +133,7 @@ $path = URLROOT . "/public/JSONS/file" . $data['discipline']->id . ".json";
     </div>
     
 </div>
+
+<script type="text/javascript" src="../../public/js/loadReviews.js"></script>
+</body>
+</html>

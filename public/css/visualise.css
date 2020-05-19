@@ -19,7 +19,7 @@ a[class="adminLink"]{
     margin: 1em auto;
 }
 
-a[class="adminLink"]:link, a[class="adminLink"]:visited, a[class="adminLink"]:active{
+a[class="adminLink"]:link, a[class="adminLink"]:visited, a[class="adminLink"]:active, p[class="adminLink"]{
     padding: 14px 25px;
     text-align: center;
     text-decoration: none;
@@ -188,7 +188,16 @@ tr:nth-child(even) {
     justify-content: stretch;
 }
 
-#reviewNav a[class="adminLink"]{
+#reviewNav a[class="adminLink"], #reviewNav p[class="adminLink"]{
     margin: 0;
     width: max-content;
+}
+
+.activeNavLink{
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    background-color: rgb(238, 153, 78);
+    font-weight: 700;
 }

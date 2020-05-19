@@ -141,6 +141,32 @@
             $this->view('disciplines/visualise', $data);
           }
 
+          public function short($id){
+            ob_clean();
+            flush();
+            echo "<h1>" . $id . "</h1>";
+          }
+
+          public function detailed($id){
+            ob_clean();
+            flush();
+            if(isLoggedIn()){
+              echo "<h1>" . $id . "</h1>";
+            } else{
+              echo "Нямате достъп до този режим на преглед! Влезте в системата или се регистрирайте, за да видите повече за тази дисциплина.";
+            }
+          }
+
+          public function admin($id){
+            ob_clean();
+            flush();
+            if($_SESSION['user_role'] == 'admin'){
+              echo "<h1>" . $id . "</h1>";
+            } else{
+              echo "Нямате достъп до този режим на преглед!";
+            }
+          }
+
           public function download($id){
 
               $file ="../public/JSONS/file" . $id . ".json";

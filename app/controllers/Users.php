@@ -163,6 +163,7 @@
       $_SESSION['user_id'] = $user->id;
       $_SESSION['user_email'] = $user->email;
       $_SESSION['user_name'] = $user->name;
+      $_SESSION['user_role'] = $user->role;
 
       redirect('disciplines'); //This will maybe become curriculums or some other welcoming page
     }
@@ -171,6 +172,7 @@
       unset($_SESSION['user_id']);
       unset($_SESSION['user_email']);
       unset($_SESSION['user_name']);
+      unset($_SESSION['user_role']);
       session_destroy();
       redirect('users/login');
     }
