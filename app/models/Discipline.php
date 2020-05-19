@@ -73,6 +73,42 @@
                 }
         }
 
+        public function updateDiscipline($data){
+            $this->db->query("UPDATE disciplines SET 
+            disciplineNameBg = :disciplineNameBg,
+            disciplineNameEng = :disciplineNameEng,
+            category = :category,
+            professor = :professor,
+            semester = :semester,
+            elective = :elective,
+            credits = :credits,
+            annotation = :annotation,
+            prerequisites = :prerequisites,
+            expectations = :expectations
+            WHERE id = :id");
+
+
+            $this->db->bind(':disciplineNameBg', $data['disciplineNameBg']);
+            $this->db->bind(':disciplineNameEng', $data['disciplineNameEng']);
+            $this->db->bind(':category', $data['category']);
+            $this->db->bind(':professor', $data['professor']);
+            $this->db->bind(':semester', $data['semester']);
+            $this->db->bind(':elective', $data['elective']);
+            $this->db->bind(':credits', $data['credits']);
+            $this->db->bind(':annotation', $data['annotation']);
+            $this->db->bind(':prerequisites', $data['prerequisites']);
+            $this->db->bind(':expectations', $data['expectations']);
+            $this->db->bind(':id', $data['id']);
+
+            // Execute
+            if($this->db->execute()){
+                return true;
+            } else {
+                echo "fail";
+                return false;
+            }
+    }
+
         public function addDisciplineForCurriculum($data){
             $this->db->query("INSERT IGNORE INTO `curriculum_disciplines` (disciplineId, curriculumId)
             VALUES (:disciplineId, :curriculumId)");
@@ -80,7 +116,6 @@
             $this->db->bind(':disciplineId', $data['disciplineId']);
             $this->db->bind(':curriculumId', $data['curriculumId']);
             
-
             // Execute
             if($this->db->execute()){
                 return true;
@@ -92,6 +127,38 @@
         public function getLastInserted(){
             $id = $this->db->getLastInsertedId();
             return $id;
-          }
+        }
+
+        /* Before we delete a discipline from the DB we need to delete its occurences in relationships tables */
+        public function deleteDisciplineRelationships($id){
+            $this->db->query('DELETE FROM `curriculum_disciplines` WHERE disciplineId = :id');
+            
+            $this->db->bind(':id', $id);
+
+            if($this->db->execute()){
+               return true;
+            } else {
+                return false;
+            }
+        }
+
+        public function deleteDiscipline($id){
+            $this->deleteDisciplineRelationships($id);
+            $this->db->query('DELETE FROM `disciplines` WHERE id = :id');
+            
+            $this->db->bind(':id', $id);
+
+            if($this->db->execute()){
+                $file ="../public/JSONS/file" . $id . ".json";
+                if(file_exists($file)) { 
+                    if(unlink($file)){
+                        return true;
+                    }
+                }
+            } else {
+                return false;
+            }
+            return true;
+        }
     }
 ?>

@@ -17,6 +17,8 @@
     });*/
  //}
 
+ let disciplineId = document.getElementById("disciplineId").innerHTML;
+
  let shortLink = document.getElementById("short");
  let detailedLink = document.getElementById("detailed");
  let adminLink = document.getElementById("admin");
@@ -30,11 +32,11 @@
      var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        document.getElementById("content").innerHTML = this.responseText;
+        document.getElementById("disciplineCV").innerHTML = this.responseText;
         console.log(this.responseText);
       }
     };
-    xmlhttp.open("GET","../short/66",true);
+    xmlhttp.open("GET","../short/" + disciplineId,true);
     xmlhttp.send();
     });
 
@@ -47,11 +49,11 @@
         var xmlhttp = new XMLHttpRequest();
        xmlhttp.onreadystatechange = function() {
          if (this.readyState == 4 && this.status == 200) {
-           document.getElementById("content").innerHTML = this.responseText;
+           document.getElementById("disciplineCV").innerHTML = this.responseText;
            console.log(this.responseText);
          }
        };
-       xmlhttp.open("GET","../detailed/26",true);
+       xmlhttp.open("GET","../detailed/" + disciplineId ,true);
        xmlhttp.send();
        });
 
@@ -64,11 +66,11 @@
         var xmlhttp = new XMLHttpRequest();
        xmlhttp.onreadystatechange = function() {
          if (this.readyState == 4 && this.status == 200) {
-           document.getElementById("content").innerHTML = this.responseText;
+           document.getElementById("disciplineCV").innerHTML = this.responseText;
            console.log(this.responseText);
          }
        };
-       xmlhttp.open("GET","../admin/16",true);
+       xmlhttp.open("GET","../admin/" + disciplineId,true);
        xmlhttp.send();
        });
 

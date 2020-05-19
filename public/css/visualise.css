@@ -201,3 +201,17 @@ tr:nth-child(even) {
     background-color: rgb(238, 153, 78);
     font-weight: 700;
 }
+
+#reviewNav input[type="submit"]{
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    background-color: #ee594e;
+    border: none;
+}
+
+#reviewNav input[type="submit"]:hover{
+    font-weight: 700;
+    transition: all .2s ease-in-out;
+}
