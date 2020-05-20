@@ -12,13 +12,68 @@
 
         
         public function index(){
-            $disciplines = $this->disciplineModel->getDisciplines();
 
-            $data = [
-                'disciplines' => $disciplines
-            ];
+            /* Searching functionality for discipline is included in index view and method. */
+            /* If a search query was sent, show only query results in index. */
 
-            $this->view('disciplines/index', $data);
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+              $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+  
+              $field=($_POST['field']);
+              $searchInput=($_POST['searchInput']);
+  
+              $disciplines = $this->disciplineModel->search($field, $searchInput);
+
+              $displaySearchedField;
+              switch($field) {
+                case "disciplineNameBg":
+                  $displaySearchedField = "Име";
+                break;
+                case "disciplineNameEng":
+                  $displaySearchedField = "English Name";
+                break;
+                case "credits":
+                  $displaySearchedField = "Кредити";
+                break;
+                case "category":
+                  $displaySearchedField = "Категория";
+                break;
+                case "semester":
+                  $displaySearchedField = "Семестър";
+                break;
+                case "professor":
+                  $displaySearchedField = "Преподавател";
+                break;
+                case "elective":
+                  $displaySearchedField = "Статут";
+                break;
+              }
+
+              if(sizeof($disciplines) == 0){
+                $data = [
+                  'searchedField' => $displaySearchedField,
+                  'searchedValue' => $searchInput,
+                  'no_results_message' => 'Няма намерени резултати за това търсене.',
+                  'disciplines' => '',
+                ];
+              } else{
+                $data = [
+                  'searchedField' => $displaySearchedField,
+                  'searchedValue' => $searchInput,
+                  'no_results_message' => '',
+                  'disciplines' => $disciplines,
+                ];
+              }
+             
+            } else {
+              /* Normal disciplines index behaviour - display all disciplines */
+              $disciplines = $this->disciplineModel->getDisciplines();
+
+              $data = [
+                  'disciplines' => $disciplines,
+              ];
+            }
+              $this->view('disciplines/index', $data);
         }
 
 
@@ -347,7 +402,6 @@
                 readfile($file);
           }
         }
-
 
         public function edit($id){
           if($_SESSION['user_role'] != 'admin'){

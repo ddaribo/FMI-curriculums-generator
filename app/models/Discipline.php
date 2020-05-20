@@ -122,7 +122,18 @@
             } else {
                 return false;
             }
-    }
+        }
+
+        public function search($field, $searchInput){
+            $this->db->query("SELECT * FROM disciplines WHERE $field LIKE '%$searchInput%'");
+            
+            /*Binding parameters in a query like this is buggy, so we avoid it here in the name of working search functionality */
+            /*To assure some security we sanitize $_POST input in the controller search method */
+
+            $results = $this->db->resultSet();
+
+            return $results;
+        }
 
         public function getLastInserted(){
             $id = $this->db->getLastInsertedId();

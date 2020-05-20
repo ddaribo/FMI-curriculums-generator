@@ -6,3 +6,35 @@
     margin-left: 2em;
     line-height: 3em;
 }
+
+.topContainer{
+    display: flex;
+    flex-direction: row;
+    background-color: peachpuff;
+    justify-content: space-evenly;
+    padding: 2em 0;
+}
+
+#searchDiv{
+    width: 70%;
+    margin-top: 2em;
+}
+
+.search label{
+    margin-right: 1em;
+}
+
+.search input{
+    width: 30%;
+    line-height: 2em;
+    margin: 0 1em;
+}
+
+#searchDiv input[type="submit"]{
+    width:20%;
+}
+
+#noResults{
+    width: 37%;
+    margin: 0 auto;
+}

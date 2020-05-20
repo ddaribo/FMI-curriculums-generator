@@ -7,19 +7,23 @@
                 <div class="form-group">
                 <div class="row">
                     <label for="email">Имейл:</label>
+                    <div class="inputAndSpan">
+                        <span class="invalid-feedback"><?php echo $data['email_err']; ?></span>
                         <input type="text" name="email" class="<?php echo (!empty($data['email_err'])) ? 'is-invalid' : ''; ?>"
                         value="<?php echo $data['email']; ?>">
+                    </div>
                 </div>
-                    <span class="invalid-feedback"><?php echo $data['email_err']; ?></span>
                 </div>
 
                 <div class="form-group">
                 <div class="row">
                     <label for="password">Парола:</label>
-                    <input type="password" name="password" class="<?php echo (!empty($data['password_err'])) ? 'is-invalid' : ''; ?>"
-                    value="<?php echo $data['password']; ?>">
+                    <div class="inputAndSpan">
+                        <span class="invalid-feedback"><?php echo $data['password_err']; ?></span>
+                        <input type="password" name="password" class="<?php echo (!empty($data['password_err'])) ? 'is-invalid' : ''; ?>"
+                         value="<?php echo $data['password']; ?>">
+                    </div>
                 </div>
-                    <span class="invalid-feedback"><?php echo $data['password_err']; ?></span>
                 </div>
 
                 <div class="buttonRow">

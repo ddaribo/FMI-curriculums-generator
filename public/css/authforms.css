@@ -10,6 +10,7 @@
 
 .authFormContainer h2{
     color: orange;
+    margin-bottom: 2em;
 }
 
 .form-group{
@@ -65,4 +66,24 @@ input[type="text"], input[type="email"], input[type="password"]{
     border:none;
     border-bottom: 2px solid black;
 
+}
+
+.inputAndSpan{
+    width: 50%;
+    margin: -0.5em 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.inputAndSpan label{
+    width: 50%;
+}
+
+.inputAndSpan input{
+    width: 100%;
+    height: 2em;
+}
+
+.invalid-feedback{
+    color: #ee594e;
 }

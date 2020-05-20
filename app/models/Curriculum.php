@@ -43,7 +43,7 @@
     }
 
     public function getDisciplinesForCurriculum($id){
-            $this->db->query("SELECT * from `disciplines`
+            $this->db->query("SELECT  DISTINCT * from `disciplines`
             JOIN `curriculum_disciplines` ON `disciplineId` = `disciplines`.`id`
             WHERE `curriculum_disciplines`.`curriculumId` = :id");
 
