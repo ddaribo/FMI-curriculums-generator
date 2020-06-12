@@ -29,6 +29,7 @@
                 $this->db->query("INSERT INTO disciplines (
                 disciplineNameBg
                 ,disciplineNameEng
+                ,specialtiesAndCourses
                 ,category
                 ,oks
                 ,professor
@@ -45,6 +46,7 @@
                 VALUES (
                 :disciplineNameBg,
                 :disciplineNameEng,
+                :specialtiesAndCourses,
                 :category,
                 :oks,
                 :professor,
@@ -60,6 +62,7 @@
 
                 $this->db->bind(':disciplineNameBg', $data['disciplineNameBg']);
                 $this->db->bind(':disciplineNameEng', $data['disciplineNameEng']);
+                $this->db->bind(':specialtiesAndCourses', $data['specialtiesAndCourses']);
                 $this->db->bind(':category', $data['category']);
                 $this->db->bind(':oks', $data['oks']);
                 $this->db->bind(':professor', $data['professor']);
@@ -86,6 +89,7 @@
             $this->db->query("UPDATE disciplines SET 
             disciplineNameBg = :disciplineNameBg,
             disciplineNameEng = :disciplineNameEng,
+            specialtiesAndCourses = :specialtiesAndCourses,
             category = :category,
             oks = :oks,
             professor = :professor,
@@ -102,6 +106,7 @@
 
             $this->db->bind(':disciplineNameBg', $data['disciplineNameBg']);
             $this->db->bind(':disciplineNameEng', $data['disciplineNameEng']);
+            $this->db->bind(':specialtiesAndCourses', $data['specialtiesAndCourses']);
             $this->db->bind(':category', $data['category']);
             $this->db->bind(':oks', $data['oks']);
             $this->db->bind(':professor', $data['professor']);

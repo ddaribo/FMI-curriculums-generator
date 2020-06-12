@@ -37,3 +37,5 @@ ALTER TABLE `disciplines` CHANGE `category` `oks` VARCHAR(50) CHARACTER SET utf8
 ALTER TABLE `disciplines` ADD `courses` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL AFTER `disciplineNameEng`, ADD `categories` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL AFTER `courses`; 
 
 ALTER TABLE `disciplines` CHANGE `categories` `category` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL; 
+
+ALTER TABLE `disciplines` CHANGE `courses` `specialtiesAndCourses` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL; 

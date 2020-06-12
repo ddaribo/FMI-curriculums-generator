@@ -84,6 +84,7 @@
 
                 $disciplineNameBg = $json['Дисциплина'];
                 $disciplineNameEng = $json['Discipline'];
+                $specialtiesAndCourses = json_encode($json['Специалности'], JSON_UNESCAPED_UNICODE);
                 $category = $json['Категория'];
                 $oks = json_encode($json['ОКС'], JSON_UNESCAPED_UNICODE);
                 $professor = $json['Преподавател'];
@@ -100,6 +101,7 @@
                 $data = [
                     'disciplineNameBg' => $disciplineNameBg,
                     'disciplineNameEng' => $disciplineNameEng,
+                    'specialtiesAndCourses' => $specialtiesAndCourses,
                     'category' => $category,
                     'oks' => $oks,
                     'professor' => $professor,
@@ -428,6 +430,7 @@
               $disciplineNameBg = $json['Дисциплина'];
               $disciplineNameEng = $json['Discipline'];
               $category = $json['Категория'];
+              $specialtiesAndCourses = json_encode($json['Специалности'], JSON_UNESCAPED_UNICODE);
               $oks = json_encode($json['ОКС'], JSON_UNESCAPED_UNICODE);
               $professor = $json['Преподавател'];
               $semester = $json['Семестър'];
@@ -445,6 +448,7 @@
                   'disciplineNameBg' => $disciplineNameBg,
                   'disciplineNameEng' => $disciplineNameEng,
                   'category' => $category,
+                  'specialtiesAndCourses' => $specialtiesAndCourses,
                   'oks' => $oks,
                   'professor' => $professor,
                   'semester' => $semester,
@@ -463,8 +467,11 @@
               $storedCurriculumIds = [];
 
               $specialties = [];
-              foreach($json['Специалности'] as $specialty){
-                $specialties[] = $specialty;
+              foreach($json['Специалности'] as $specialtyCourse){
+                foreach($specialtyCourse as $specialty => $course){
+                  /*echo $specialties . " " . $course  .  " ";*/
+                  $specialties[] = $specialty;
+                }
               }
               //add oks
               $oksArr = [];
