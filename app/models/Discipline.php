@@ -30,6 +30,7 @@
                 disciplineNameBg
                 ,disciplineNameEng
                 ,category
+                ,oks
                 ,professor
                 ,semester
                 ,elective
@@ -37,22 +38,30 @@
                 ,annotation
                 ,prerequisites
                 ,expectations
+                ,content
+                ,synopsis
+                ,bibliography
                 )
                 VALUES (
                 :disciplineNameBg,
                 :disciplineNameEng,
                 :category,
+                :oks,
                 :professor,
                 :semester,
                 :elective,
                 :credits,
                 :annotation,
                 :prerequisites,
-                :expectations)");
+                :expectations,
+                :content,
+                :synopsis,
+                :bibliography)");
 
                 $this->db->bind(':disciplineNameBg', $data['disciplineNameBg']);
                 $this->db->bind(':disciplineNameEng', $data['disciplineNameEng']);
                 $this->db->bind(':category', $data['category']);
+                $this->db->bind(':oks', $data['oks']);
                 $this->db->bind(':professor', $data['professor']);
                 $this->db->bind(':semester', $data['semester']);
                 $this->db->bind(':elective', $data['elective']);
@@ -60,9 +69,9 @@
                 $this->db->bind(':annotation', $data['annotation']);
                 $this->db->bind(':prerequisites', $data['prerequisites']);
                 $this->db->bind(':expectations', $data['expectations']);
-                //TODO : figure out how to store synopsis and bibliography - ?speratae tables /as contents will be?*/
-                /*$this->db->bind(':synopsis', $data['synopsis']);
-                $this->db->bind(':bibliography', $data['bibliography']);*/
+                $this->db->bind(':content', $data['content']);
+                $this->db->bind(':synopsis', $data['synopsis']);
+                $this->db->bind(':bibliography', $data['bibliography']);
             
                 // Execute
                 if($this->db->execute()){
@@ -78,19 +87,23 @@
             disciplineNameBg = :disciplineNameBg,
             disciplineNameEng = :disciplineNameEng,
             category = :category,
+            oks = :oks,
             professor = :professor,
             semester = :semester,
             elective = :elective,
             credits = :credits,
             annotation = :annotation,
             prerequisites = :prerequisites,
-            expectations = :expectations
+            expectations = :expectations,
+            content = :content,
+            synopsis = :synopsis,
+            bibliography = :bibliography
             WHERE id = :id");
-
 
             $this->db->bind(':disciplineNameBg', $data['disciplineNameBg']);
             $this->db->bind(':disciplineNameEng', $data['disciplineNameEng']);
             $this->db->bind(':category', $data['category']);
+            $this->db->bind(':oks', $data['oks']);
             $this->db->bind(':professor', $data['professor']);
             $this->db->bind(':semester', $data['semester']);
             $this->db->bind(':elective', $data['elective']);
@@ -98,6 +111,9 @@
             $this->db->bind(':annotation', $data['annotation']);
             $this->db->bind(':prerequisites', $data['prerequisites']);
             $this->db->bind(':expectations', $data['expectations']);
+            $this->db->bind(':content', $data['content']);
+            $this->db->bind(':synopsis', $data['synopsis']);
+            $this->db->bind(':bibliography', $data['bibliography']);
             $this->db->bind(':id', $data['id']);
 
             // Execute
@@ -141,7 +157,7 @@
         }
 
         /* Before we delete a discipline from the DB we need to delete its occurences in relationships tables */
-        public function deleteDisciplineRelationships($id){
+        public function deleteDisciplineCurriculumRelationship($id){
             $this->db->query('DELETE FROM `curriculum_disciplines` WHERE disciplineId = :id');
             
             $this->db->bind(':id', $id);
@@ -154,7 +170,7 @@
         }
 
         public function deleteDiscipline($id){
-            $this->deleteDisciplineRelationships($id);
+            $this->deleteDisciplineCurriculumRelationship($id);
             $this->db->query('DELETE FROM `disciplines` WHERE id = :id');
             
             $this->db->bind(':id', $id);

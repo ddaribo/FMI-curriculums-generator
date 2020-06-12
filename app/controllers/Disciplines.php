@@ -85,6 +85,7 @@
                 $disciplineNameBg = $json['Дисциплина'];
                 $disciplineNameEng = $json['Discipline'];
                 $category = $json['Категория'];
+                $oks = json_encode($json['ОКС'], JSON_UNESCAPED_UNICODE);
                 $professor = $json['Преподавател'];
                 $semester = $json['Семестър'];
                 $elective = $json['Статут'];
@@ -92,14 +93,15 @@
                 $annotation =  $json['Анотация'];
                 $prerequisites = $json['Предварителни изисквания'];
                 $expectations = $json['Очаквани резултати'];
-               /* $synopsis = $json['Конспект'];
-                $bibliography = $json['Библиография'];*/
-
-                
+                $content = json_encode($json['Съдържание'], JSON_UNESCAPED_UNICODE);
+                $synopsis = json_encode($json['Конспект'], JSON_UNESCAPED_UNICODE);
+                $bibliography = json_encode($json['Библиография'], JSON_UNESCAPED_UNICODE);
+  
                 $data = [
                     'disciplineNameBg' => $disciplineNameBg,
                     'disciplineNameEng' => $disciplineNameEng,
                     'category' => $category,
+                    'oks' => $oks,
                     'professor' => $professor,
                     'semester' => $semester,
                     'elective' => $elective,
@@ -107,16 +109,20 @@
                     'annotation' => $annotation,
                     'prerequisites' => $prerequisites,
                     'expectations' => $expectations,
-                    /*'synopsis' => $synopsis,
-                    'bibliography' => $bibliography, */
+                    'content' => $content,
+                    'synopsis' => $synopsis,
+                    'bibliography' => $bibliography,
                     'mainInfo_err' => ''
                 ];
 
                 $storedCurriculumIds = [];
 
                 $specialties = [];
-                foreach($json['Специалности'] as $specialty){
-                  $specialties[] = $specialty;
+                foreach($json['Специалности'] as $specialtyCourse){
+                  foreach($specialtyCourse as $specialty => $course){
+                    /*echo $specialties . " " . $course  .  " ";*/
+                    $specialties[] = $specialty;
+                  }
                 }
                 //add oks
                 $oksArr = [];
@@ -210,10 +216,15 @@
             "<h4>Изучава се от специалности:</h4>" .
             "<ul>";
 
-            foreach($json["Специалности"] as $specialty){ 
-                $display = $display . 
-                "<li>" . $specialty . "</br></li>";
+            foreach($json['Специалности'] as $specialtyCourse){
+              foreach($specialtyCourse as $specialty => $courses){
+                foreach($courses as $course){
+                  $display = $display . 
+                  "<li>" . $specialty . " - Курс: ". $course . "</br></li>";
+                }
               }
+            }
+            
               $display = $display . "</ul>" .
               "</div>" . 
               "<div id=\"elective\">" .
@@ -260,7 +271,8 @@
                 "<th>Тема</th>" .
                   "</tr>";
                   $count = 0;
-                  foreach($json["Съдържание"] as $topic){ 
+                  //foreach($json["Съдържание"] as $topic){ 
+                  foreach(json_decode($discipline->content) as $topic){ 
                           $display = $display . 
                           "<tr>" .
                           "<td>" . ++$count . "</td>" .
@@ -280,7 +292,7 @@
                 "<th>Тема</th>" .
                 "</tr>";
                 $count = 0;
-                foreach($json["Конспект"] as $topic){ 
+                foreach(json_decode($discipline->synopsis) as $topic){ 
                   $display = $display . 
                   "<tr>" .
                   "<td>" . ++$count . "</td>" .
@@ -300,7 +312,7 @@
                   "<th>Източник</th>" .
                   "</tr>";
                   $count = 0;
-                      foreach($json["Библиография"] as $topic){ 
+                      foreach(json_decode($discipline->bibliography) as $topic){ 
                         $display = $display . 
                         "<tr>" .
                               "<td>" . ++$count . "</td>" .
@@ -412,9 +424,11 @@
 
               $json = json_decode($_POST['mainInfo'], true);
 
+
               $disciplineNameBg = $json['Дисциплина'];
               $disciplineNameEng = $json['Discipline'];
               $category = $json['Категория'];
+              $oks = json_encode($json['ОКС'], JSON_UNESCAPED_UNICODE);
               $professor = $json['Преподавател'];
               $semester = $json['Семестър'];
               $elective = $json['Статут'];
@@ -422,14 +436,16 @@
               $annotation =  $json['Анотация'];
               $prerequisites = $json['Предварителни изисквания'];
               $expectations = $json['Очаквани резултати'];
-             /* $synopsis = $json['Конспект'];
-              $bibliography = $json['Библиография'];*/
+              $content = json_encode($json['Съдържание'], JSON_UNESCAPED_UNICODE);
+              $synopsis = json_encode($json['Конспект'], JSON_UNESCAPED_UNICODE);
+              $bibliography = json_encode($json['Библиография'], JSON_UNESCAPED_UNICODE);
 
               
               $data = [
                   'disciplineNameBg' => $disciplineNameBg,
                   'disciplineNameEng' => $disciplineNameEng,
                   'category' => $category,
+                  'oks' => $oks,
                   'professor' => $professor,
                   'semester' => $semester,
                   'elective' => $elective,
@@ -437,9 +453,10 @@
                   'annotation' => $annotation,
                   'prerequisites' => $prerequisites,
                   'expectations' => $expectations,
+                  'content' => $content,
+                  'synopsis' => $synopsis,
+                  'bibliography' => $bibliography,
                   'id' => $id,
-                  /*'synopsis' => $synopsis,
-                  'bibliography' => $bibliography, */
                   'mainInfo_err' => ''
               ];
 
