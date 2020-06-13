@@ -42,6 +42,8 @@
                 ,content
                 ,synopsis
                 ,bibliography
+                ,code
+                ,administrativeInfo
                 )
                 VALUES (
                 :disciplineNameBg,
@@ -58,7 +60,9 @@
                 :expectations,
                 :content,
                 :synopsis,
-                :bibliography)");
+                :bibliography,
+                :code,
+                :administrativeInfo)");
 
                 $this->db->bind(':disciplineNameBg', $data['disciplineNameBg']);
                 $this->db->bind(':disciplineNameEng', $data['disciplineNameEng']);
@@ -75,6 +79,9 @@
                 $this->db->bind(':content', $data['content']);
                 $this->db->bind(':synopsis', $data['synopsis']);
                 $this->db->bind(':bibliography', $data['bibliography']);
+                $this->db->bind(':code', $data['code']);
+                $this->db->bind(':administrativeInfo', $data['administrativeInfo']);
+
             
                 // Execute
                 if($this->db->execute()){
@@ -101,7 +108,9 @@
             expectations = :expectations,
             content = :content,
             synopsis = :synopsis,
-            bibliography = :bibliography
+            bibliography = :bibliography,
+            code = :code,
+            administrativeInfo = :administrativeInfo
             WHERE id = :id");
 
             $this->db->bind(':disciplineNameBg', $data['disciplineNameBg']);
@@ -119,7 +128,10 @@
             $this->db->bind(':content', $data['content']);
             $this->db->bind(':synopsis', $data['synopsis']);
             $this->db->bind(':bibliography', $data['bibliography']);
+            $this->db->bind(':code', $data['code']);
+            $this->db->bind(':administrativeInfo', $data['administrativeInfo']);
             $this->db->bind(':id', $data['id']);
+
 
             // Execute
             if($this->db->execute()){
@@ -136,6 +148,36 @@
 
             $this->db->bind(':disciplineId', $data['disciplineId']);
             $this->db->bind(':curriculumId', $data['curriculumId']);
+            
+            // Execute
+            if($this->db->execute()){
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        public function addDisciplineDependsOn($data){
+            $this->db->query("INSERT IGNORE INTO `depends_on` (disciplineId, code)
+            VALUES (:disciplineId, :code)");
+
+            $this->db->bind(':disciplineId', $data['disciplineId']);
+            $this->db->bind(':code', $data['code']);
+            
+            // Execute
+            if($this->db->execute()){
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        public function addDisciplinesDependBy($data){
+            $this->db->query("INSERT IGNORE INTO `depend_by` (disciplineId, code)
+            VALUES (:disciplineId, :code)");
+
+            $this->db->bind(':disciplineId', $data['disciplineId']);
+            $this->db->bind(':code', $data['code']);
             
             // Execute
             if($this->db->execute()){
@@ -174,8 +216,35 @@
             }
         }
 
+        public function deleteDisciplineDependsOn($id){
+            $this->db->query('DELETE FROM `depends_on` WHERE disciplineId = :id');
+            
+            $this->db->bind(':id', $id);
+
+            if($this->db->execute()){
+               return true;
+            } else {
+                return false;
+            }
+        }
+
+        public function deleteDisciplineDependBy($id){
+            $this->db->query('DELETE FROM `depend_by` WHERE disciplineId = :id');
+            
+            $this->db->bind(':id', $id);
+
+            if($this->db->execute()){
+               return true;
+            } else {
+                return false;
+            }
+        }
+
         public function deleteDiscipline($id){
             $this->deleteDisciplineCurriculumRelationship($id);
+            $this->deleteDisciplineDependsOn($id);
+            $this->deleteDisciplineDependBy($id);
+
             $this->db->query('DELETE FROM `disciplines` WHERE id = :id');
             
             $this->db->bind(':id', $id);

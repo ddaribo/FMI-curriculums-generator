@@ -97,6 +97,8 @@
                 $content = json_encode($json['Съдържание'], JSON_UNESCAPED_UNICODE);
                 $synopsis = json_encode($json['Конспект'], JSON_UNESCAPED_UNICODE);
                 $bibliography = json_encode($json['Библиография'], JSON_UNESCAPED_UNICODE);
+                $code = $json['Код'];
+                $administrativeInfo = json_encode($json['Административна информация'], JSON_UNESCAPED_UNICODE);
   
                 $data = [
                     'disciplineNameBg' => $disciplineNameBg,
@@ -114,6 +116,8 @@
                     'content' => $content,
                     'synopsis' => $synopsis,
                     'bibliography' => $bibliography,
+                    'code' => $code,
+                    'administrativeInfo' => $administrativeInfo,
                     'mainInfo_err' => ''
                 ];
 
@@ -174,6 +178,23 @@
                         ];
                         $this->disciplineModel->addDisciplineForCurriculum($dcdata);
                       }
+
+                  
+                      foreach($json['Зависи от'] as $code){
+                        $data = [
+                          'disciplineId' => $id,
+                          'code' => $code,
+                        ];
+                        $this->disciplineModel->addDisciplineDependsOn($data);
+                      }
+
+                      foreach($json['Зависят от нея'] as $code){
+                        $data = [
+                          'disciplineId' => $id,
+                          'code' => $code,
+                        ];
+                        $this->disciplineModel->addDisciplinesDependBy($data);
+                      }
                       
                       $fp = fopen('../public/JSONS/file' . $id . '.json', 'w');
                       fwrite($fp, json_encode($json, JSON_UNESCAPED_UNICODE));
@@ -193,7 +214,148 @@
                   $this->view('disciplines/import', $data);
             }
           }
-        
+
+          public function edit($id){
+            if($_SESSION['user_role'] != 'admin'){
+              redirect('disciplines');
+            }
+  
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+  
+                $json = json_decode($_POST['mainInfo'], true);
+  
+  
+                $disciplineNameBg = $json['Дисциплина'];
+                $disciplineNameEng = $json['Discipline'];
+                $category = $json['Категория'];
+                $specialtiesAndCourses = json_encode($json['Специалности'], JSON_UNESCAPED_UNICODE);
+                $oks = json_encode($json['ОКС'], JSON_UNESCAPED_UNICODE);
+                $professor = $json['Преподавател'];
+                $semester = $json['Семестър'];
+                $elective = $json['Статут'];
+                $credits = $json['Кредити'];
+                $annotation =  $json['Анотация'];
+                $prerequisites = $json['Предварителни изисквания'];
+                $expectations = $json['Очаквани резултати'];
+                $content = json_encode($json['Съдържание'], JSON_UNESCAPED_UNICODE);
+                $synopsis = json_encode($json['Конспект'], JSON_UNESCAPED_UNICODE);
+                $bibliography = json_encode($json['Библиография'], JSON_UNESCAPED_UNICODE);
+                $code = $json['Код'];
+                $adminInfo = json_encode($json['Административна информация'], JSON_UNESCAPED_UNICODE);
+  
+                
+                $data = [
+                    'disciplineNameBg' => $disciplineNameBg,
+                    'disciplineNameEng' => $disciplineNameEng,
+                    'category' => $category,
+                    'specialtiesAndCourses' => $specialtiesAndCourses,
+                    'oks' => $oks,
+                    'professor' => $professor,
+                    'semester' => $semester,
+                    'elective' => $elective,
+                    'credits' => $credits,
+                    'annotation' => $annotation,
+                    'prerequisites' => $prerequisites,
+                    'expectations' => $expectations,
+                    'content' => $content,
+                    'synopsis' => $synopsis,
+                    'bibliography' => $bibliography,
+                    'code' => $code,
+                    'adminInfo' => $adminInfo,
+                    'id' => $id,
+                    'mainInfo_err' => ''
+                ];
+  
+                $storedCurriculumIds = [];
+  
+                $specialties = [];
+                foreach($json['Специалности'] as $specialtyCourse){
+                  foreach($specialtyCourse as $specialty => $course){
+                    /*echo $specialties . " " . $course  .  " ";*/
+                    $specialties[] = $specialty;
+                  }
+                }
+                //add oks
+                $oksArr = [];
+                foreach($json['ОКС'] as $oks){
+                  $oksArr[] = $oks;
+                }
+                $years = [];
+                foreach($json['Академични години'] as $year){
+                  $years[] = $year;
+                }
+                foreach($specialties as $specialty){
+                  foreach($years as $year){
+                    foreach($oksArr as $oks){
+                      $curriculumdata = [
+                        'oks' => $oks,
+                        'specialty' => $specialty,
+                        'academicYear' => $year,
+                      
+                    ];
+                      $this->curriculumModel->addCurriculum($curriculumdata);
+                      $returnedCurriculumIdsObjects[] =  $this->curriculumModel->getCurriculumByNameAndYearAndOKS($curriculumdata);
+                    }
+                  }
+                }
+                $storedCurriculumIds = [];
+                foreach($returnedCurriculumIdsObjects as $cid => $value){
+                  $storedCurriculumIds[] = $value->id;
+                }
+  
+                
+                //$this->disciplineModel->addDiscipline($data);
+                  // Validate data
+                  if(empty($data['mainInfo'])){
+                    $data['mainInfo_err'] = 'Please enter main info';
+                  }
+          
+                  // Make sure no errors
+                 
+                if($this->disciplineModel->updateDiscipline($data)){
+                  
+                  foreach($storedCurriculumIds as $cid){
+                    $dcdata = [
+                      'disciplineId' => $id,
+                      'curriculumId' => $cid,
+                    ];
+                    $this->disciplineModel->addDisciplineForCurriculum($dcdata);
+                  }
+
+                  foreach($json['Зависи от'] as $code){
+                    $data = [
+                      'disciplineId' => $id,
+                      'code' => $code,
+                    ];
+                    $this->disciplineModel->addDisciplineDependsOn($data);
+                  }
+
+                  foreach($json['Зависят от нея'] as $code){
+                    $data = [
+                      'disciplineId' => $id,
+                      'code' => $code,
+                    ];
+                    $this->disciplineModel->addDisciplinesDependBy($data);
+                  }
+
+                  $fp = fopen('../public/JSONS/file' . $id . '.json', 'w');
+                  fwrite($fp, json_encode($json, JSON_UNESCAPED_UNICODE));
+                  fclose($fp);
+                  flash('discipline_updated', "Успешно редактирахте дисциплината!");
+                  redirect('disciplines/index');
+                 } else {
+                  die('Something went wrong');
+                 }
+  
+            } else {
+                $fp = fopen('../public/JSONS/file' . $id . '.json', 'r'); 
+                $data = [
+                    'id' => $id,
+                  ];
+            
+                  $this->view('disciplines/edit', $data);
+            }
+          }
           
           private function getFile($id){
             $json_data = file_get_contents(URLROOT . "/public/JSONS/file" . $id . ".json");
@@ -414,127 +576,6 @@
                 flush();
 
                 readfile($file);
-          }
-        }
-
-        public function edit($id){
-          if($_SESSION['user_role'] != 'admin'){
-            redirect('disciplines');
-          }
-
-          if($_SERVER['REQUEST_METHOD'] == 'POST'){
-
-              $json = json_decode($_POST['mainInfo'], true);
-
-
-              $disciplineNameBg = $json['Дисциплина'];
-              $disciplineNameEng = $json['Discipline'];
-              $category = $json['Категория'];
-              $specialtiesAndCourses = json_encode($json['Специалности'], JSON_UNESCAPED_UNICODE);
-              $oks = json_encode($json['ОКС'], JSON_UNESCAPED_UNICODE);
-              $professor = $json['Преподавател'];
-              $semester = $json['Семестър'];
-              $elective = $json['Статут'];
-              $credits = $json['Кредити'];
-              $annotation =  $json['Анотация'];
-              $prerequisites = $json['Предварителни изисквания'];
-              $expectations = $json['Очаквани резултати'];
-              $content = json_encode($json['Съдържание'], JSON_UNESCAPED_UNICODE);
-              $synopsis = json_encode($json['Конспект'], JSON_UNESCAPED_UNICODE);
-              $bibliography = json_encode($json['Библиография'], JSON_UNESCAPED_UNICODE);
-
-              
-              $data = [
-                  'disciplineNameBg' => $disciplineNameBg,
-                  'disciplineNameEng' => $disciplineNameEng,
-                  'category' => $category,
-                  'specialtiesAndCourses' => $specialtiesAndCourses,
-                  'oks' => $oks,
-                  'professor' => $professor,
-                  'semester' => $semester,
-                  'elective' => $elective,
-                  'credits' => $credits,
-                  'annotation' => $annotation,
-                  'prerequisites' => $prerequisites,
-                  'expectations' => $expectations,
-                  'content' => $content,
-                  'synopsis' => $synopsis,
-                  'bibliography' => $bibliography,
-                  'id' => $id,
-                  'mainInfo_err' => ''
-              ];
-
-              $storedCurriculumIds = [];
-
-              $specialties = [];
-              foreach($json['Специалности'] as $specialtyCourse){
-                foreach($specialtyCourse as $specialty => $course){
-                  /*echo $specialties . " " . $course  .  " ";*/
-                  $specialties[] = $specialty;
-                }
-              }
-              //add oks
-              $oksArr = [];
-              foreach($json['ОКС'] as $oks){
-                $oksArr[] = $oks;
-              }
-              $years = [];
-              foreach($json['Академични години'] as $year){
-                $years[] = $year;
-              }
-              foreach($specialties as $specialty){
-                foreach($years as $year){
-                  foreach($oksArr as $oks){
-                    $curriculumdata = [
-                      'oks' => $oks,
-                      'specialty' => $specialty,
-                      'academicYear' => $year,
-                    
-                  ];
-                    $this->curriculumModel->addCurriculum($curriculumdata);
-                    $returnedCurriculumIdsObjects[] =  $this->curriculumModel->getCurriculumByNameAndYearAndOKS($curriculumdata);
-                  }
-                }
-              }
-              $storedCurriculumIds = [];
-              foreach($returnedCurriculumIdsObjects as $cid => $value){
-                $storedCurriculumIds[] = $value->id;
-              }
-
-              
-              //$this->disciplineModel->addDiscipline($data);
-                // Validate data
-                if(empty($data['mainInfo'])){
-                  $data['mainInfo_err'] = 'Please enter main info';
-                }
-        
-                // Make sure no errors
-               
-              if($this->disciplineModel->updateDiscipline($data)){
-                
-                foreach($storedCurriculumIds as $cid){
-                  $dcdata = [
-                    'disciplineId' => $id,
-                    'curriculumId' => $cid,
-                  ];
-                  $this->disciplineModel->addDisciplineForCurriculum($dcdata);
-                }
-                $fp = fopen('../public/JSONS/file' . $id . '.json', 'w');
-                fwrite($fp, json_encode($json, JSON_UNESCAPED_UNICODE));
-                fclose($fp);
-                flash('discipline_updated', "Успешно редактирахте дисциплината!");
-                redirect('disciplines/index');
-               } else {
-                die('Something went wrong');
-               }
-
-          } else {
-              $fp = fopen('../public/JSONS/file' . $id . '.json', 'r'); 
-              $data = [
-                  'id' => $id,
-                ];
-          
-                $this->view('disciplines/edit', $data);
           }
         }
 
