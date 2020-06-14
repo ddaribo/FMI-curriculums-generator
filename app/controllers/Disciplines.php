@@ -383,12 +383,16 @@
               "<h4>Статут:</h4>" .
               "<h3>" . $discipline->elective . "</h3>" .
               "</div>" .
+              "<div id=\"category\">" .
+              "<h4>Категория: </h4>" .
+                "<p>" . $discipline->category ."</p>" .
+              "</div>" .
               "</div>" .
               "<div id=\"lecturer\">" .
               "<h4>Преподавател</h4>" .
                 "<p>" . $discipline->professor ."</p>" .
               "</div>" .
-              "<div class=\"grayContainer\">" .
+              "<div id=\"grayContainer\">" .
               "<div id=\"annotation\">" .
               "<h4>Анотация</h4>" .
                   "<p>" . $discipline->annotation . "</p>" .
@@ -478,22 +482,24 @@
             return $display;
           }
           
-          private function creatAdminDisplay($id){
+          private function createAdminDisplay($id){
             $discipline = $this->disciplineModel->getDisciplineById($id);
             $json = $this->getFile($id);
             
             $display = $this->createDetailedDisplay($id) . 
             "<div id=\"administrative\">" .
-            "<h2>Административна информация</h2>";
+            "<h2>Административна информация</h2>"
+            . "<div class=\"adminInfoContent\">";
+            $display = $display . "<strong>Код: </strong> " . $discipline->code . "</br>";
             foreach($json["Административна информация"] as $adminInfoTitle => $value){
               $display = $display . "<strong>" . $adminInfoTitle . ": </strong> " . $value . "</br>";
             }
-            $display = $display . "</div>";
+            $display = $display . "</div></div>";
             
             return $display;
           }
 
-          private function dependanciesDisplay($id){
+          private function dependenciesDisplay($id){
             $dependsOn = (array)$this->disciplineModel->getDisciplineDependsOn($id);
             $dependBy = (array)$this->disciplineModel->getDisciplineDependBy($id);
 
@@ -510,9 +516,12 @@
               if($disc != NULL)
                 $dependByThisDiscipline[] = $disc;
             }
+            $display = $this->createShortDisplay($id);
 
-            $display = "";
-          
+            if(empty($dependsOnDisciplines) && empty($dependByThisDiscipline)){
+              $display = $display . "<br>" . "<p style=\"padding-left: 2em;\"><em>Няма зададени зависимости за тази дисциплина.</em></p>";
+            }
+
             if(!empty($dependsOnDisciplines)){
               $display = $display . "<div id=\"dependancyTable\">" .
               "<div class=\"tableTitle\">" .
@@ -587,12 +596,25 @@
               echo "Нямате достъп до този режим на преглед! Влезте в системата или се регистрирайте, за да видите повече за тази дисциплина.";
             }
           }
+
+          public function detailedWithDependencies($id){
+            ob_clean();
+            flush();
+            
+            $display = $this->dependenciesDisplay($id);
+            
+            if(isLoggedIn()){
+              echo $display;
+            } else{
+              echo "Нямате достъп до този режим на преглед! Влезте в системата или се регистрирайте, за да видите повече за тази дисциплина.";
+            }
+          }
           
           public function admin($id){
             ob_clean();
             flush();
             
-            $display = $this->creatAdminDisplay($id);
+            $display = $this->createAdminDisplay($id);
             
             if($_SESSION['user_role'] == 'admin'){
               echo $display;
@@ -604,12 +626,10 @@
           public function visualise($id){
             $discipline = $this->disciplineModel->getDisciplineById($id);
             $defaultDisplay = $this->createShortDisplay($id);
-            $dependanciesDisplay = $this->dependanciesDisplay($id);
            
             $data = [
                 'discipline' => $discipline,
                 'defaultDisplay' => $defaultDisplay,
-                'dependanciesDisplay' => $dependanciesDisplay,
             ];
 
             $this->view('disciplines/visualise', $data);

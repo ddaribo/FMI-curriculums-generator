@@ -6,7 +6,7 @@
         <?php if($_SESSION['user_role'] == 'admin') : ?>
             <a class="nav-link" href="<?php echo URLROOT; ?>/disciplines/import" class="btn">Добави дисциплина</a>
             <?php endif; ?>  
-        <a class="nav-link" href="<?php echo URLROOT; ?>/users/logout">Logout</a>
+        <a class="nav-link" href="<?php echo URLROOT; ?>/users/logout">Изход</a>
             <?php else : ?>
         <a class="nav-link" href="<?php echo URLROOT; ?>/users/register">Регистрация</a>
         <a class="nav-link" href="<?php echo URLROOT; ?>/users/login">Вход</a>

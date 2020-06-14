@@ -1,0 +1,38 @@
+CREATE DATABASE IF NOT EXISTS `curriculumsprojectdb` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `curriculumsprojectdb`;
+
+CREATE TABLE `curriculumsprojectdb`.`users` ( `id` INT NOT NULL AUTO_INCREMENT , `name` VARCHAR(256) NOT NULL , `email` VARCHAR(256) NOT NULL , `password` VARCHAR(256) NOT NULL ,
+`role` VARCHAR(20) NOT NULL, PRIMARY KEY (`id`)) ENGINE = InnoDB; 
+
+CREATE TABLE `curriculumsprojectdb`.`curriculums` ( `id` INT NOT NULL AUTO_INCREMENT, `oks` VARCHAR(20) NULL , `specialty` VARCHAR(50) NOT NULL , `academicYear` VARCHAR(20) NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+ALTER TABLE `curriculumsprojectdb`.`curriculums` ADD UNIQUE `specialty` (`specialty`, `academicYear`, `oks`) USING BTREE;
+
+CREATE TABLE `curriculumsprojectdb`.`disciplines` ( `id` INT NOT NULL AUTO_INCREMENT, `disciplineNameBg` VARCHAR(100) NOT NULL , `disciplineNameEng` VARCHAR(100) DEFAULT NULL,
+`specialtiesAndCourses` VARCHAR(200) DEFAULT NULL, `category` VARCHAR(50) NOT NULL, `oks` VARCHAR(50) NOT NULL ,`professor` VARCHAR(100) NOT NULL , `semester` VARCHAR(50) NOT NULL , `elective` VARCHAR(50) DEFAULT NULL , `credits` INT UNSIGNED NOT NULL , `annotation` TEXT NOT NULL , `prerequisites` TEXT NULL DEFAULT NULL , `expectations` TEXT NULL DEFAULT NULL , `content` TEXT DEFAULT NULL , `synopsis` TEXT DEFAULT NULL , `bibliography` TEXT DEFAULT NULL ,`code` VARCHAR(20) DEFAULT NULL, `administrativeInfo` TEXT DEFAULT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB; 
+
+CREATE TABLE `curriculumsprojectdb`.`curriculums_disciplines` ( `curriculumId` INT NOT NULL , `disciplineId` INT NOT NULL ) ENGINE = InnoDB;
+
+ALTER TABLE `curriculums_disciplines` ADD CONSTRAINT `FK_curriculum_manytomany` FOREIGN KEY (`curriculumId`) REFERENCES `curriculums`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT; 
+
+ALTER TABLE `curriculums_disciplines` ADD CONSTRAINT `FK_disciplines_manytomany` FOREIGN KEY (`disciplineId`) REFERENCES `disciplines`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+CREATE TABLE `curriculumsprojectdb`.`depends_on` ( `disciplineId` INT NOT NULL , `code` VARCHAR(20) NOT NULL ) ENGINE = InnoDB; 
+
+CREATE TABLE `curriculumsprojectdb`.`depend_by` ( `disciplineId` INT NOT NULL , `code` VARCHAR(20) NOT NULL ) ENGINE = InnoDB; 
+
+INSERT INTO `disciplines` (`id`, `disciplineNameBg`, `disciplineNameEng`, `specialtiesAndCourses`, `category`, `oks`, `professor`, `semester`, `elective`, `credits`, `annotation`, `prerequisites`, `expectations`, `content`, `synopsis`, `bibliography`, `code`, `administrativeInfo`) VALUES (NULL, 'Операционни системи - практикум', 'OS-practice', '[{\"Софтуерно инженерство\": [\"2\"],\"Компютърни науки\": [\"2\"]}]', 'ОКН', '[\"Бакалавър\", \"Maгистър\"]', 'гл. ас. Георги Иванов Георгиев', 'Летен', 'избираема', '2', 'Дисциплината усъвършенства уменията по практическото използване на командния интерпретатор и системните  извиквания в стандарта POSIX.', 'Учебни дисциплини „Компютърни архитектури“ и „Увод в  програмирането“.', 'Студентите придобиватпрактически навици за:(1) Взаимодействие с ОС UNIX/Linux чрез команден език (shell).(2) Работа с езика C.(3) Работа с файлове и файлови дескриптори в стандарта POSIX.(4) Работа с комуникационни канали (pipe, socket).(5) Управление на процеси', '[
+		"Основни команди в OS Linux (вградени + coreutils)", "Програмиране на shell.43Инструменти за работа с езика C в OS Linux -gcc, make.", "Системни извиквания за работа с файлове: open, close, read, write, lseek.", "Управление на процеси: fork, exec, exit, wait", "Работа с тръби и файлови дескриптори: pipe, dup", "Сокети: socket, bind, listen, accept, connect", "Асинхронни комуникации: fcntl, errno, select"
+	]', '[\r\n		\"Команден интерпретатор в ОС UNIX/Linux. Основни команди.\", \"Комбиниране на команди –конвейри, паралелни задачи. Филтри. Файлова структура и имена, разширяване на метасимволи.\", \"Програмиране на команден език. Променливи, обкръжение. Управляващи команди. Командни процедури. \", \"Инструменти за работа с езика C в OS Linux -gcc, make.\", \"Системни извиквания за работа с файлове: open, close, read, write, lseek.\", \"Управление на процеси: fork, exec, exit, wait\", \"Работа с тръби и файлови дескриптори: pipe, dup\", \"Сокети: socket, bind, listen, accept, connect\", \"Асинхронни комуникации: fcntl, errno, select\"\r\n	]', '[\r\n		\"[1] Tanenbaum A.S. Operating Systems: Design and Implementation, 3nd ed., NJ: Pearson Prentice Hall, 2006.\", \"[2] Peterson J. L., Silberschatz A. Operating Systems Conceps, Addison-Wasley Publishing   Company Inc., 1985.\"\r\n	]', 'ОСПР123', '{\r\n		\"Утвърдена с решение на ФС с протокол\": \"№ 6 / 26.06.2017 г.\",\r\n		\"Утвърдил\": \"доц. П. Първанов\",\r\n		\"Катедра\": \"Изчислителни системи\"\r\n	}');
+
+
+INSERT INTO `curriculums` (`id`, `oks`, `specialty`, `academicYear`) VALUES (NULL, 'Бакалавър', 'Софтуерно инженерство', '2018/2019'), (NULL, 'Магистър', 'Софтуерно инженерство', '2018/2019'), (NULL, 'Бакалавър', 'Софтуерно инженерство', '2019/2020'), (NULL, 'Магистър', 'Софтуерно инженерство', '2019/2020'), (NULL, 'Бакалавър', 'Компютърни науки', '2018/2019'), (NULL, 'Магистър', 'Компютърни науки', '2018/2019'), (NULL, 'Бакалавър', 'Компютърни науки', '2019/2020'),  (NULL, 'Магистър', 'Компютърни науки', '2019/2020');
+
+INSERT INTO `curriculums_disciplines` (`curriculumId`, `disciplineId`) VALUES (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1), (8, 1);
+
+INSERT INTO `depends_on` (`disciplineId`, `code`) VALUES ('1', 'УП123'), ('1', 'ООП123');
+
+INSERT INTO `depend_by` (`disciplineId`, `code`) VALUES ('1', 'AWS123');
+
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`) VALUES (NULL, 'admin', 'admin@fmi.uni-sofia.bg', '$2y$10$dLdmztKkcSdpbh4AvECMiuBRpjWyHn09aDchzsNKoBF7MXiYbUEbC', 'admin'), (NULL, 'regular_user', 'regular_user@abv.bg', '$2y$10$mXa88xx6PCmDHd.B1Gs71OuV2w8W8Om71QliJRRuhywmSubnYOLGe', '') 
+
