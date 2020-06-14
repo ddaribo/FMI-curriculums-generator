@@ -47,6 +47,10 @@ a[class="adminLink"]:hover{
 
 }
 
+.title h1{
+    width: 75%;
+}
+
 #credits{
     width:10%;
 }
@@ -73,6 +77,7 @@ a[class="adminLink"]:hover{
     width: 27%;
     border-left: 5px solid #1C1E27;
     padding-left: 2em;
+    height: 8em;
 }
 
 .mainContainer{
@@ -96,8 +101,7 @@ a[class="adminLink"]:hover{
 #category{
     border-right: 8px solid #F27405;
     padding-right: 2em;
-
-
+    height: 8em;
 }
 
 #annotation{
@@ -245,24 +249,24 @@ tr:nth-child(even) {
 
 /* Dependancy tables CSS*/
 
-#dependancyTable{
+.dependancyTable{
     width: 100%;
     margin-top: 2em;
     margin-bottom: 2em;
 }
 
-#dependancyTable a{
+.dependancyTable a{
     display: block;
     width: 60%;
 }
 
-#dependancyTable a[class="commonLink"]:link, 
-#dependancyTable a[class="commonLink"]:visited, 
-#dependancyTable a[class="commonLink"]:active {
+.dependancyTable a[class="commonLink"]:link, 
+.dependancyTable a[class="commonLink"]:visited, 
+.dependancyTable a[class="commonLink"]:active {
     border: none;
 }
 
-#dependancyTable a[class="commonLink"]:hover{
+.dependancyTable a[class="commonLink"]:hover{
     background-color: rgba(255, 255, 255, 0);
    
 }

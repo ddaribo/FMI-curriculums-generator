@@ -25,8 +25,8 @@
 		"[1] Tanenbaum A.S. Operating Systems: Design and Implementation, 3nd ed., NJ: Pearson Prentice Hall, 2006.", "[2] Peterson J. L., Silberschatz A. Operating Systems Conceps, Addison-Wasley Publishing   Company Inc., 1985."
 	],
 	"Код": "ОСПР123",
-	"Зависи от": ["УП123", "ООП123"],
-	"Зависят от нея": ["AWS123"],
+	"Зависи от": ["УП123"],
+	"Зависят от нея": ["ООП123"],
 	"Административна информация": {
 		"Утвърдена с решение на ФС с протокол": "№ 6 / 26.06.2017 г.",
 		"Утвърдил": "доц. П. Първанов",

@@ -370,10 +370,12 @@
 
             foreach($json['Специалности'] as $specialtyCourse){
               foreach($specialtyCourse as $specialty => $courses){
+                $display = $display . 
+                  "<li>" . $specialty . " - Курс: ";
                 foreach($courses as $course){
-                  $display = $display . 
-                  "<li>" . $specialty . " - Курс: ". $course . "</br></li>";
+                  $display = $display . $course ."; ";
                 }
+                $display = $display . "</br></li>";
               }
             }
             
@@ -395,7 +397,7 @@
               "<div id=\"grayContainer\">" .
               "<div id=\"annotation\">" .
               "<h4>Анотация</h4>" .
-                  "<p>" . $discipline->annotation . "</p>" .
+                  "<p>" . str_replace("\\\\n","</br>",$discipline->annotation) . "</p>" .
                   "</div>" .
                   "</div>"
                   ;
@@ -410,11 +412,11 @@
             $display = $this->createShortDisplay($id) .
             "<div id=\"prerequisites\">" .
             "<h4>Предварителни изисквания</h4>" .
-            "<p>" . $discipline->prerequisites . "</p>" .
+            "<p>" . str_replace("\\\\n","</br>",$discipline->prerequisites) . "</p>" .
             "</div>" .
             "<div id=\"expectations\">" .
             "<h4>Очаквани резултати</h4>" .
-            "<p>" . $discipline->expectations . "</p>" .
+            "<p>" . str_replace("\\\\n","</br>",$discipline->expectations) . "</p>" .
             "<p>" . /*echo str_replace('.', ". " . "</br>", $json["Очаквани резултати"]); */"</p>" .
             "</div>" . 
             "<div id=\"content\">" .
@@ -432,7 +434,7 @@
                           $display = $display . 
                           "<tr>" .
                           "<td>" . ++$count . "</td>" .
-                          "<td>" . $topic . "</br></td>" .
+                          "<td>" . str_replace("\\n","</br>",$topic) . "</br></td>" .
                             "</tr>";
                           } 
                           $count = 0;
@@ -452,7 +454,7 @@
                   $display = $display . 
                   "<tr>" .
                   "<td>" . ++$count . "</td>" .
-                  "<td>" . $topic . "</br></td>" .
+                  "<td>" . str_replace("\\n","</br>",$topic) . "</br></td>" .
                   "</tr>";
                       } 
                       $count = 0;
@@ -472,7 +474,7 @@
                         $display = $display . 
                         "<tr>" .
                               "<td>" . ++$count . "</td>" .
-                              "<td>" . $topic . "</br></td>" .
+                              "<td>" . str_replace("\\n","</br>",$topic) . "</br></td>" .
                               "</tr>";
                             } 
                             $count = 0;
@@ -513,17 +515,21 @@
             $dependByThisDiscipline = [];
             foreach($dependBy as $disciplineCode){
               $disc = $this->disciplineModel->getDisciplineInfoByCode($disciplineCode->code);
-              if($disc != NULL)
+              
+              if($disc != NULL){
                 $dependByThisDiscipline[] = $disc;
+              }
             }
+
             $display = $this->createShortDisplay($id);
 
             if(empty($dependsOnDisciplines) && empty($dependByThisDiscipline)){
               $display = $display . "<br>" . "<p style=\"padding-left: 2em;\"><em>Няма зададени зависимости за тази дисциплина.</em></p>";
+              return $display;
             }
 
             if(!empty($dependsOnDisciplines)){
-              $display = $display . "<div id=\"dependancyTable\">" .
+              $display = $display . "<div class=\"dependancyTable\">" .
               "<div class=\"tableTitle\">" .
                 "<h4>Дисциплината зависи от:</h4>" .
                 "</div>" .
@@ -544,10 +550,10 @@
               "</div>";
             }
 
-            if(!empty($dependByThisDisciplines)){
-              $display = $display . "<div id=\"dependancyTable\">" .
+            if(!empty($dependByThisDiscipline)){
+              $display = $display . "<div class=\"dependancyTable\">" .
               "<div class=\"tableTitle\">" .
-                "<h4>Дисциплини, зависещи от тази дисциплина:</h4>" .
+                "<h4>От тази дисциплина зависят:</h4>" .
                 "</div>" .
               "<table>" .
                 "<tr>" .
@@ -564,7 +570,7 @@
                     } 
               $display = $display . "</table>" .
               "</div>";
-            }
+           }
 
             /*$display = $display . "<ul>";
             foreach($dependByThisDiscipline as $disc){
