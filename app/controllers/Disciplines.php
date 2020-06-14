@@ -126,11 +126,9 @@
                 $specialties = [];
                 foreach($json['Специалности'] as $specialtyCourse){
                   foreach($specialtyCourse as $specialty => $course){
-                    /*echo $specialties . " " . $course  .  " ";*/
                     $specialties[] = $specialty;
                   }
                 }
-                //add oks
                 $oksArr = [];
                 foreach($json['ОКС'] as $oks){
                   $oksArr[] = $oks;
@@ -158,15 +156,11 @@
                   $storedCurriculumIds[] = $value->id;
                 }
 
-                
-                //$this->disciplineModel->addDiscipline($data);
                   // Validate data
                   if(empty($data['mainInfo'])){
                     $data['mainInfo_err'] = 'Please enter main info';
                   }
-          
-                  // Make sure no errors
-                 
+     
                     if($this->disciplineModel->addDiscipline($data)){
                       
                       $id = $this->disciplineModel->getLastInserted();
@@ -271,11 +265,10 @@
                 $specialties = [];
                 foreach($json['Специалности'] as $specialtyCourse){
                   foreach($specialtyCourse as $specialty => $course){
-                    /*echo $specialties . " " . $course  .  " ";*/
                     $specialties[] = $specialty;
                   }
                 }
-                //add oks
+
                 $oksArr = [];
                 foreach($json['ОКС'] as $oks){
                   $oksArr[] = $oks;
@@ -302,16 +295,11 @@
                 foreach($returnedCurriculumIdsObjects as $cid => $value){
                   $storedCurriculumIds[] = $value->id;
                 }
-  
-                
-                //$this->disciplineModel->addDiscipline($data);
-                  // Validate data
+
                   if(empty($data['mainInfo'])){
                     $data['mainInfo_err'] = 'Please enter main info';
                   }
-          
-                  // Make sure no errors
-                 
+
                 if($this->disciplineModel->updateDiscipline($data)){
                   
                   foreach($storedCurriculumIds as $cid){
@@ -504,6 +492,79 @@
             
             return $display;
           }
+
+          private function dependanciesDisplay($id){
+            $dependsOn = (array)$this->disciplineModel->getDisciplineDependsOn($id);
+            $dependBy = (array)$this->disciplineModel->getDisciplineDependBy($id);
+
+            $dependsOnDisciplines = [];
+            foreach($dependsOn as $disciplineCode){
+              $disc = $this->disciplineModel->getDisciplineInfoByCode($disciplineCode->code);
+              if($disc != NULL)
+                $dependsOnDisciplines[] = $disc;
+            }
+
+            $dependByThisDiscipline = [];
+            foreach($dependBy as $disciplineCode){
+              $disc = $this->disciplineModel->getDisciplineInfoByCode($disciplineCode->code);
+              if($disc != NULL)
+                $dependByThisDiscipline[] = $disc;
+            }
+
+            $display = "";
+          
+            if(!empty($dependsOnDisciplines)){
+              $display = $display . "<div id=\"dependancyTable\">" .
+              "<div class=\"tableTitle\">" .
+                "<h4>Дисциплината зависи от:</h4>" .
+                "</div>" .
+              "<table>" .
+                "<tr>" .
+                "<th>№</th>" .
+                  "<th>Дисциплина</th>" .
+                  "</tr>";
+                  $count = 0;
+                  foreach($dependsOnDisciplines as $disc){
+                        $display = $display . 
+                        "<tr>" .
+                              "<td>" . ++$count . "</td>" .
+                              "<td> <a class=\"commonLink\" href=" . URLROOT . "/disciplines/visualise/" . $disc->id . "> <div class=\"curriculumRow\" >" . $disc->disciplineNameBg . "</div></a></td>" .
+                              "</tr>";
+                    } 
+              $display = $display . "</table>" .
+              "</div>";
+            }
+
+            if(!empty($dependByThisDisciplines)){
+              $display = $display . "<div id=\"dependancyTable\">" .
+              "<div class=\"tableTitle\">" .
+                "<h4>Дисциплини, зависещи от тази дисциплина:</h4>" .
+                "</div>" .
+              "<table>" .
+                "<tr>" .
+                "<th>№</th>" .
+                  "<th>Дисциплина</th>" .
+                  "</tr>";
+                  $count = 0;
+                  foreach($dependByThisDiscipline as $disc){
+                        $display = $display . 
+                        "<tr>" .
+                              "<td>" . ++$count . "</td>" .
+                              "<td> <a class=\"commonLink\" href=" . URLROOT . "/disciplines/visualise/" . $disc->id . "> <div class=\"curriculumRow\" >" . $disc->disciplineNameBg . "</div></a></td>" .
+                              "</tr>";
+                    } 
+              $display = $display . "</table>" .
+              "</div>";
+            }
+
+            /*$display = $display . "<ul>";
+            foreach($dependByThisDiscipline as $disc){
+              $display = $display . "<li>" . $disc->disciplineNameBg . " " . $disc->disciplineId . "</li>";
+            }
+            $display = $display . "</ul>";*/
+
+            return $display;
+          }
           
           public function short($id){
             ob_clean();
@@ -543,10 +604,12 @@
           public function visualise($id){
             $discipline = $this->disciplineModel->getDisciplineById($id);
             $defaultDisplay = $this->createShortDisplay($id);
-
+            $dependanciesDisplay = $this->dependanciesDisplay($id);
+           
             $data = [
                 'discipline' => $discipline,
-                'defaultDisplay' => $defaultDisplay
+                'defaultDisplay' => $defaultDisplay,
+                'dependanciesDisplay' => $dependanciesDisplay,
             ];
 
             $this->view('disciplines/visualise', $data);
@@ -594,5 +657,5 @@
           }
         } 
 
-      }
+    }
 ?>          

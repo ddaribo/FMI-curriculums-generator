@@ -187,6 +187,36 @@
             }
         }
 
+        public function getDisciplineInfoByCode($code){
+
+            // Check if discipline with such code exists. It is possible that we upload a dependancy between
+            // a discipline that has not yet been uploaded. A constraint between depends_on and depend_by and disciplines
+            // is not added for simplicity's sake and due to the implementation.
+
+            $this->db->query("SELECT COUNT(*)  FROM disciplines WHERE code='$code'");
+            $count = $this->db->single();
+
+            if($count != 0){
+                $this->db->query("SELECT * FROM disciplines WHERE code=:code ");
+                $this->db->bind(':code', $code);
+                $row = $this->db->single();
+                return $row;
+            }
+            return NULL;
+        }
+
+        public function getDisciplineDependsOn($id){
+            $this->db->query("SELECT code FROM depends_on WHERE disciplineId=$id");
+            $results = $this->db->resultSet();
+            return $results;
+        }
+
+        public function getDisciplineDependBy($id){
+            $this->db->query("SELECT code FROM depend_by WHERE disciplineId=$id");
+            $results = $this->db->resultSet();
+            return $results;
+        }
+
         public function search($field, $searchInput){
             $this->db->query("SELECT * FROM disciplines WHERE $field LIKE '%$searchInput%'");
             

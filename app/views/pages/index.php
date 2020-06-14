@@ -2,6 +2,7 @@
 <div class="jumbotron">
     <div class="container">
         <h1><?php echo $data['title'];?></h1>
+        <img src="img/undraw_analysis_4jis.svg" alt="">
         <p><?php echo $data['description'];?></p>
     </div>
 </div>

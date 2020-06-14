@@ -14,13 +14,6 @@
             $this->view('pages/index', $data);
         }
 
-        public function about(){
-            $data = [
-                'title' => 'About',
-                'description' => 'Тук трябва да се преглеждат съществуващите учебни планове.'
-            ];
-            $this->view('pages/about', $data);
-        }
 
     }
 ?>

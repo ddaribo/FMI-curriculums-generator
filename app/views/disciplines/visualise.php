@@ -27,6 +27,10 @@ $path = URLROOT . "/public/JSONS/file" . $data['discipline']->id . ".json";
 
 <div id="disciplineCV" class="mainContainer">
         <?php echo $data['defaultDisplay']; ?>
+        <?php echo $data['dependanciesDisplay']; ?>
+</div>
+
+<div class="mainContainer">
 </div>
 
 <script type="text/javascript" src="../../public/js/loadReviews.js"></script>
