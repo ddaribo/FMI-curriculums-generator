@@ -19,7 +19,9 @@
                     <option value="elective">Задължителна/Избираема</option>
                 </select>
                 <input type="text" name="searchInput" id="searchInput">
-                <input type="submit" value="Намери дисциплина">
+                <div id="buttonDiv">
+                    <input type="submit" value="Намери дисциплина">
+                </div>
             </form>
         </div>
         <?php if($data['searchedField']){?>

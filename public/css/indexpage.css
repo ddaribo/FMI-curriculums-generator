@@ -1,0 +1,17 @@
+#indexContainer{
+    padding: 3em;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    background-color: rgba(255, 165, 149, 0.082);
+}
+
+#indexContainer img{
+    width: 50%;
+}
+
+#titleAndDescription{
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+}

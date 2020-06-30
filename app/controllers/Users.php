@@ -28,32 +28,32 @@
 
         // Validate Email
         if(empty($data['email'])){
-          $data['email_err'] = 'Pleae enter email';
+          $data['email_err'] = 'Моля, въведете имейл адрес';
         } else {
           // Check email
           if($this->userModel->findUserByEmail($data['email'])){
-            $data['email_err'] = 'Email is already taken';
+            $data['email_err'] = 'Имейл адресът вече се използва';
           }
         }
 
         // Validate Name
         if(empty($data['name'])){
-          $data['name_err'] = 'Pleae enter name';
+          $data['name_err'] = 'Моля, въведете име';
         }
 
         // Validate Password
         if(empty($data['password'])){
-          $data['password_err'] = 'Pleae enter password';
+          $data['password_err'] = 'Моля, въведете парола';
         } elseif(strlen($data['password']) < 6){
-          $data['password_err'] = 'Password must be at least 6 characters';
+          $data['password_err'] = 'Паролата трябва да е с дължина поне 6 символа';
         }
 
         // Validate Confirm Password
         if(empty($data['confirm_password'])){
-          $data['confirm_password_err'] = 'Pleae confirm password';
+          $data['confirm_password_err'] = 'Моля потвърдете паролата';
         } else {
           if($data['password'] != $data['confirm_password']){
-            $data['confirm_password_err'] = 'Passwords do not match';
+            $data['confirm_password_err'] = 'Паролите не съвпадат';
           }
         }
 
@@ -112,12 +112,12 @@
 
         // Validate Email
         if(empty($data['email'])){
-          $data['email_err'] = 'Pleae enter email';
+          $data['email_err'] = 'Моля, въведете имейл адрес';
         }
 
         // Validate Password
         if(empty($data['password'])){
-          $data['password_err'] = 'Please enter password';
+          $data['password_err'] = 'Моля, въведете парола';
         }
 
         if($this->userModel->findUserByEmail($data['email'])){

@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="<?php echo URLROOT; ?>/css/disciplinesIndex.css">
     <link rel="stylesheet" href="<?php echo URLROOT; ?>/css/curriculums.css">
     <link rel="stylesheet" href="<?php echo URLROOT; ?>/css/authforms.css">
+    <link rel="stylesheet" href="<?php echo URLROOT; ?>/css/indexpage.css">
+
     <title><?php echo SITENAME;?></title>
 </head>
 <body>
