@@ -7,7 +7,7 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE); // Getting an undeserved notice 
 */
 
 class Core {
-    protected $currentController = 'Pages';// If there is no controller
+    protected $currentController = 'DefaultController';// If there is no controller
     protected $currentMethod = 'index';
     protected $params = [];
 

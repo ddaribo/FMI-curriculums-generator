@@ -1,5 +1,5 @@
 <?php
-    class Pages extends Controller{
+    class DefaultController extends Controller{
         public function __construct(){
            
         }
@@ -11,9 +11,7 @@
                                     да разглеждат учебните планове на специалностите от различни випуски и изучаваните дисциплини.'
             ];
 
-            $this->view('pages/index', $data);
+            $this->view('default/index', $data);
         }
-
-
     }
 ?>

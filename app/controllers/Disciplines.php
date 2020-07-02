@@ -572,12 +572,6 @@
               "</div>";
            }
 
-            /*$display = $display . "<ul>";
-            foreach($dependByThisDiscipline as $disc){
-              $display = $display . "<li>" . $disc->disciplineNameBg . " " . $disc->disciplineId . "</li>";
-            }
-            $display = $display . "</ul>";*/
-
             return $display;
           }
           

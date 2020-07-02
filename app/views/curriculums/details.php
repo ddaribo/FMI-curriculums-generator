@@ -6,10 +6,26 @@
 
 
 <div class="curriculumsPageContainer">
-
-    <div class="curriculumList">
+        <table>
+            <tr>
+                <th>№</th>
+                <th>Име</th>
+                <th>Преподавател</th>
+                <th>ОКС</th>
+                <th>Кредити</th>
+            </tr>
+        <?php $count = 1; ?>
         <?php foreach($data['disciplines'] as $discipline) : ?>
-                <a class="commonLink" href="<?php echo URLROOT . "/disciplines/visualise/" . $discipline->id;?>"> <div class="curriculumRow"><?php echo $discipline->disciplineNameBg;?></div></a>
+                <tr>
+                    <td><?php echo $count;?></td>
+                    <td>
+                        <a class="tableLink" href="<?php echo URLROOT . "/disciplines/visualise/" . $discipline->id;?>"> <div class="curriculumRow"><?php echo $discipline->disciplineNameBg;?></div></a>
+                    </td>
+                    <td><?php echo $discipline->professor;?></td>
+                    <td><?php echo $discipline->category;?></td>
+                    <td><?php echo $discipline->credits;?></td>
+                </tr>
+                <?php $count++; ?>
         <?php endforeach; ?>
-    </div>
+        </table>
 </div>

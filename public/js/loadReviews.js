@@ -1,22 +1,3 @@
-//function showAdmin2() {
-    /*var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        //document.getElementById("txtHint").innerHTML = this.responseText;
-      }
-    };
-    xmlhttp.open("GET","disciplines/test",true);
-    xmlhttp.send();*/
-
-    /*fetch('../test/4')
-    .then(response => response)
-    .then(response => {
-        alert("here!")
-        document.getElementById("content").innerHTML = response;
-        console.log(response); 
-    });*/
- //}
-
  let disciplineId = document.getElementById("disciplineId").innerHTML;
 
  let shortLink = document.getElementById("short");

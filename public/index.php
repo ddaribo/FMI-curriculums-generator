@@ -3,4 +3,5 @@
 
     /* Init Core Library */
     $init = new Core();
+
 ?>
