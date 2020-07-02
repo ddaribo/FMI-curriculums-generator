@@ -1,4 +1,5 @@
 <div class="nav">
+    <a id="home-link" href="<?php echo URLROOT; ?>/"><img id="fmi-logo" src="<?php echo URLROOT; ?>/public/img/fmi-logo.svg" alt="Home"></a>
     <?php if(isset($_SESSION['user_id'])) : ?>
         
             <a class="nav-link" href="<?php echo URLROOT; ?>/curriculums/index">Учебни планове</a>

@@ -38,6 +38,9 @@ html, body {
     text-decoration: none;
     line-height: 2.3;
 }
+.nav-link:first-child{
+    padding-left: -1em;
+}
 
 a:hover.nav-link, a:active.nav-link {
     color: #1C1E27;
@@ -49,4 +52,19 @@ a:hover.nav-link, a:active.nav-link {
     flex-direction: row;
     position: absolute;
     right: 0;   
+}
+
+#fmi-logo{
+    height: 100%;
+    padding-left: 1em;
+}
+
+
+#home-link{
+    width: 12%;
+}
+
+#home-link:hover{
+    background-color: #FFCB00;;
+
 }
