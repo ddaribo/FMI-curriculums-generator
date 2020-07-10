@@ -31,7 +31,7 @@ ALTER TABLE `curriculum_disciplines` ADD CONSTRAINT `FK_curriculum_manytomany` F
 
 ALTER TABLE `curriculum_disciplines` ADD CONSTRAINT `FK_disciplines_manytomany` FOREIGN KEY (`disciplineId`) REFERENCES `disciplines`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
-CREATE TABLE `curriculumsprojectdb`.`depends_on` ( `disciplineId` INT NOT NULL , `code` VARCHAR(20) NOT NULL ) ENGINE = InnoDB; 
+CREATE TABLE `depends_on` ( `disciplineId` INT NOT NULL , `code` VARCHAR(20) NOT NULL ) ENGINE = InnoDB; 
 
 ALTER TABLE `depends_on` ADD UNIQUE( `disciplineId`, `code`); 
 
