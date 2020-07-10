@@ -28,19 +28,19 @@ a[class="adminLink"]:link, a[class="adminLink"]:visited, a[class="adminLink"]:ac
     text-decoration: none;
     color: white;
     font-weight: 500;
-    background-color: #F27405;
+    background-color: var(--brand-orange);
     border: 5px solid transparent;
 
 }
 
 a[class="adminLink"]:hover{
-    border: 5px solid #1C1E27;
-    color: #1C1E27;
+    border: 5px solid var(--brand-dark-blue);
+    color: var(--brand-dark-blue);
     transition: all .2s ease-in-out;
 }
 
 .title{
-    background-color: #FFCB00;
+    background-color: var(--brand-yellow);
     margin-top: 2em;
 	padding-left: 2em;
 	width: 80%;
@@ -58,7 +58,7 @@ a[class="adminLink"]:hover{
 
 #credits h3{
     transform: translateY(1.7em);
-    color: #1C1E27;
+    color: var(--brand-dark-blue);
     font-size: 1.5em;
 }
 
@@ -76,7 +76,7 @@ a[class="adminLink"]:hover{
 
 #elective{
     width: 27%;
-    border-left: 5px solid #1C1E27;
+    border-left: 5px solid var(--brand-dark-blue);
     padding-left: 2em;
     height: 8em;
 }
@@ -100,7 +100,7 @@ a[class="adminLink"]:hover{
 }
 
 #category{
-    border-right: 8px solid #F27405;
+    border-right: 8px solid var(--brand-orange);
     padding-right: 2em;
     height: 8em;
 }
@@ -112,8 +112,8 @@ a[class="adminLink"]:hover{
 }
 
 #grayContainer{
-    border-top: 3px solid #F27405;
-    border-bottom: 3px solid #F27405;
+    border-top: 3px solid var(--brand-orange);
+    border-bottom: 3px solid var(--brand-orange);
     clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
     background-color: #E3E7EA;
     width:100%;
@@ -122,17 +122,17 @@ a[class="adminLink"]:hover{
 #prerequisites{
     margin-top: 2em;
     padding: 0 0 2em 0;
-    border-left: 5px solid #1C1E27;
+    border-left: 5px solid var(--brand-dark-blue);
 }
 
 #expectations{
     margin-top: 2em;
     padding: 0 0 2em 0;
-    border-left: 5px solid #1C1E27;
+    border-left: 5px solid var(--brand-dark-blue);
 }
 
 #prerequisites h4, #expectations h4{
-    background-color:#F27405;
+    background-color:var(--brand-orange);
     line-height: 2.5em;
     color: white;
     font-size: 1.3em;
@@ -143,7 +143,7 @@ a[class="adminLink"]:hover{
 }
 
 .tableTitle{
-    background-color:#1C1E27;
+    background-color:var(--brand-dark-blue);
     color: white;
     width:69.60%;
     margin: 0 auto;
@@ -160,14 +160,14 @@ table{
     margin: 0 auto;
 }
 th{
-    background-color:#FFCB00;
+    background-color:var(--brand-yellow);
     font-size:1.5em;
     line-height: 2.5em;
 }
 
 /*doesnt work*/
 tr {
-   border: 1px solid #1C1E27;
+   border: 1px solid var(--brand-dark-blue);
  }
 td{
     padding: 1em;
@@ -184,9 +184,9 @@ tr:nth-child(even) {
 }
 
 #administrative h2{
-    border-top: 2px solid #F27405;
-    border-bottom: 2px solid #F27405;
-    color: #F27405;
+    border-top: 2px solid var(--brand-orange);
+    border-bottom: 2px solid var(--brand-orange);
+    color: var(--brand-orange);
     padding: 1em 2em;
 }
 
@@ -226,7 +226,7 @@ tr:nth-child(even) {
 }
 
 #reviewNav input[type="submit"]{
-    background-color: #F27405;
+    background-color:var(--brand-orange);
     border: 5px solid transparent;
     margin: 0;
     width: max-content;
@@ -242,9 +242,9 @@ tr:nth-child(even) {
 }
 
 #reviewNav input[type="submit"]:hover{
-    color: #1C1E27;
+    color: var(--brand-dark-blue);
     background-color: #eb4034;
-    border: 5px solid #1C1E27;;
+    border: 5px solid var(--brand-dark-blue);
     transition: all .2s ease-in-out;
 }
 

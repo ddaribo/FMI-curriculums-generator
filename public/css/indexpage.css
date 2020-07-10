@@ -1,3 +1,9 @@
+:root {
+    --brand-yellow: #FFCB00;
+    --brand-orange: #F27405;
+    --brand-dark-blue: #1C1E27;
+  }
+
 #indexContainer{
     padding: 3em;
     display: flex;

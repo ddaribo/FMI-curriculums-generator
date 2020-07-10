@@ -83,6 +83,10 @@
        xmlhttp.send();
        });
 
+/* Theme experimenting */
+let changeThemeBtn = document.getElementById("theme");
 
+changeThemeBtn.addEventListener("click", function(){
+  
 
-
+});
