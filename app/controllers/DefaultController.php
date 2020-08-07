@@ -6,8 +6,8 @@
 
         public function index(){
             $data = [
-                'title' => 'FMI curriculums',
-                'description' => 'В системата FMI curriculums студентите могат
+                'title' => SITENAME,
+                'description' => 'В системата ' . SITENAME . ' студентите могат
                                     да разглеждат учебните планове на специалностите от различни випуски и изучаваните дисциплини.'
             ];
 

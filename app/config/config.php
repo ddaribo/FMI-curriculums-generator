@@ -6,14 +6,13 @@
     define('DB_NAME', 'curriculumsprojectdb');
     /* 
         App Root - whatever the path of the project folder on the machine is + \app folder. 
-        Originally it was dirname(dirname(__FILE__)) - two folders back from the current (config) file, which should normally work.
-        However, there was a problem on the live demo, so configure the path manually.
+        dirname(dirname(__FILE__)) - two folders back from the current (config) file, should also work
     */
-    define('APPROOT', 'C:\xampp\htdocs\FMIcurriculums' . '\app');
+    define('APPROOT',  dirname(dirname(__FILE__)));    
     // Url Root
-    define('URLROOT', 'http://localhost/FMIcurriculums');
+    define('URLROOT', 'http://localhost/fmicourse');
     // Site Name
-    define('SITENAME', 'FMI curriculums');
+    define('SITENAME', 'FMI course');
 
     define('APPVERSION', '1.0.0');
 ?>
