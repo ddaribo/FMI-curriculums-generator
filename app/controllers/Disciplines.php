@@ -191,7 +191,7 @@
                       }
                       
                       $fp = fopen('../public/JSONS/file' . $id . '.json', 'w');
-                      fwrite($fp, json_encode($json, JSON_UNESCAPED_UNICODE));
+                      fwrite($fp, json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
                       fclose($fp);
 
                       flash('discipline_success', "Успешно добавихте дисциплина!");
@@ -327,7 +327,7 @@
                   }
 
                   $fp = fopen('../public/JSONS/file' . $id . '.json', 'w');
-                  fwrite($fp, json_encode($json, JSON_UNESCAPED_UNICODE));
+                  fwrite($fp, json_encode($json, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
                   fclose($fp);
                   flash('discipline_updated', "Успешно редактирахте дисциплината!");
                   redirect('disciplines/index');
