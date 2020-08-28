@@ -17,7 +17,8 @@ $path = URLROOT . "/public/JSONS/file" . $data['discipline']->id . ".json";
     <a class="adminLink"  id="dependencies" href="">Зависимости</a>
     <a class="adminLink" id="admin" href="">Служебен</a>
     <?php if($_SESSION['user_role'] == 'admin') { ?>
-        <a class="adminLink" href="<?php echo URLROOT . "/disciplines/download/" . $data['discipline']->id ?>">Експорт на JSON файл за тази дисциплина</a>
+        <a class="adminLink" href="<?php echo URLROOT . "/disciplines/download/" . $data['discipline']->id ?>">JSON файл</a>
+        <a class="adminLink" href="<?php echo URLROOT . "/disciplines/downloadHTML/" . $data['discipline']->id ?>">HTML файл</a>
         <a class="adminLink" href="<?php echo  URLROOT . "/disciplines/edit/" . $data['discipline']->id ?>">Редактиране</a>
         <form class="adminLink" style="background-color:#ee594e;" action="<?php echo  URLROOT . "/disciplines/delete/" . $data['discipline']->id ?>" method="post">
         <input type="submit" value="Изтриване">

@@ -635,7 +635,7 @@
             $this->view('disciplines/visualise', $data);
           }
           
-          public function download($id){
+        public function download($id){
               $file ="../public/JSONS/file" . $id . ".json";
               if(file_exists($file)) { 
               }else{
@@ -661,6 +661,45 @@
                 readfile($file);
           }
         }
+
+        public function downloadHTML($id){
+
+          $css = file_get_contents("../public/css/visualise.css");
+          $embeddedStyle = "<style>" . 
+          $css .
+          "</style>";
+
+          $initialHtml = "<!DOCTYPE html>" .
+          "<head>" .
+          "<title>Document</title>" .
+          /* Linking the google font in this file too, since the font is served from google and not locally. */
+          "<link href=\"https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,200;0,400;0,500;0,600;1,300;1,600&display=swap\" rel=\"stylesheet\">" . 
+          $embeddedStyle .
+          "</head>" .
+          "<body>" .
+          "<div class=\"mainContainer\">"; 
+
+            
+          $content = $this->createAdminDisplay($id);
+
+          $finalHtml = "</div>" .
+          "</body>" .
+          "</html>";
+          
+          header('Content-Description: File Transfer');
+          header('Content-Transfer-Encoding: binary');
+          header('Content-Type: text/html; charset=utf-8'); 
+          header('Content-Disposition: attachment; filename="disciplineHtml-'.$id.'"');
+          header('Expires: 0');
+          header('Cache-Control: must-revalidate');
+          header('Pragma: public');
+
+          ob_clean();
+          flush();
+          
+          echo $initialHtml . $content . $finalHtml;
+        }
+    
 
         public function delete($id){
           if($_SESSION['user_role'] == 'admin'){

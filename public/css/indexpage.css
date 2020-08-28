@@ -1,4 +1,6 @@
 :root {
+    /*Intention was to make styles more maintainable, but vars don't 
+        work when exporting the discipline html page, so not really using them for now.*/
     --brand-yellow: #FFCB00;
     --brand-orange: #F27405;
     --brand-dark-blue: #1C1E27;
