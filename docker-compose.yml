@@ -1,0 +1,35 @@
+services:
+  app:
+    build: .
+    ports:
+      - "80:80"
+    environment:
+      DB_HOST: db
+      DB_USER: fmiuser
+      DB_PASS: fmipassword
+      DB_NAME: curriculumsprojectdb
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mariadb:10.4
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: rootpassword
+      MARIADB_DATABASE: curriculumsprojectdb
+      MARIADB_USER: fmiuser
+      MARIADB_PASSWORD: fmipassword
+    volumes:
+      # Automatically imported on first run (only when the data volume is empty)
+      - ./curriculumsprojectdb.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  db_data:
