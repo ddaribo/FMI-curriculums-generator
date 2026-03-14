@@ -1,0 +1,18 @@
+.htaccess са директиви за Apache сървъра
+
+<IfModule mod_rewrite.c>
+    Options -Multiviews
+    RewriteEngine On
+    RewriteBase /MVC/public  
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]  - всичко в публичната папка бива препратено към index.php и преработване на url-а, когато в него има параметри (за красота)
+</IfModule>
+
+код, който скрива /public от url-то - да се намали какъвто и да било шанс да се стигне до app папката
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^$ public/ [L]
+    RewriteRule (.*) public/$1 [L]
+</IfModule>
